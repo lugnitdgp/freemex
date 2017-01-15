@@ -1,6 +1,7 @@
 import requests
 import json
 from .models import *
+from django.db import transaction
 
 
 def fetch_quotes(symbols):
@@ -26,7 +27,7 @@ def fetch_quotes(symbols):
 
 
 def update_all_stock_prices():
-    all_stocks = models.Stock.objects.all()
+    all_stocks = Stock.objects.all()
     symbol_list = [s.code for s in all_stocks]
     quotes = fetch_quotes(symbol_list)
     for stock in all_stocks:
@@ -35,6 +36,7 @@ def update_all_stock_prices():
         stock.save()
 
 
+@transaction.atomic
 def update_all_player_assets():
     all_players = Player.objects.all()
     for player in all_players:

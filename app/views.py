@@ -38,7 +38,7 @@ def leaderboard(request):
     context = {}
 
     players = Player.objects.all()
-    players = sorted(players, key=lambda a: a.total_value)
+    players = sorted(players, key=lambda a: a.total_value(), reverse=True)
 
     context['players'] = players
     return render(request, 'app/leaderboard.html', context)

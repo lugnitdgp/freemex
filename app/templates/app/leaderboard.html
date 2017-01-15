@@ -67,10 +67,12 @@
         </thead>
         <tbody>
             {% for player in players %}
+                <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ player.user.first_name }} {{ player.user.last_name }}</td>
                 <td>{{ player }}</td>
                 <td>{{ player.total_value }}</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>

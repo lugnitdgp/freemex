@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
     'app',
+    'django_crontab',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -191,3 +192,9 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email, age_range'
 }
+
+# CRON JOB
+
+CRONJOBS = [
+    ('*/2 * * * *', 'app.cron.updatejob')
+]
