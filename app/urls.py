@@ -6,9 +6,17 @@ urlpatterns = [
     # Home Page
     url(r'^$', views.index, name='index'),
 
-    # Login Page
-    url(r'^login/$',
-        views.login_page, name='login_page'),
+    # Market Watch
+    url(r'^market/$', views.market, name='market'),
+
+    # Leaderboard
+    url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
+
+    # Buy stock
+    url(r'^buystock/$', views.buyStock, name='buyStock'),
+
+    # Sell stock
+    url(r'^sellstock/$', views.sellStock, name='sellStock'),
 
     # social login urls
     url('', include('social.apps.django_app.urls', namespace='social')),

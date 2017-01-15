@@ -1,9 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Freemex17</title>
-</head>
-<body>
-	<h1>Freemex17</h1>
-</body>
-</html>
+{% extends "app/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+
+<!--Mask-->
+
+<div class="Main-page_logo">
+  <a href="http://mkti.in">
+    <img src="MUKTI-17-LOGO-white.png" width="18%" height: "auto"/>
+  </a>
+</div>
+<div class="view"></div>
+
+
+
+<div class="contain">
+  <div class="flex-center">
+    <ul>
+      <li>
+      <img class="Freemex-logo" src="{% static "img/logo.png" %}"/>
+      </li>
+      <li>
+        <p id="intro">DATE/TIME/VENUE</p>
+      </li>
+      <li>
+        <a href="{% url "social:begin" backend="facebook" %}"><button type="button" class="btn btn-fb btn-primary primary-color-dark"><i class="fa fa-facebook left"></i> Facebook</button></a>
+        <a href="{% url "social:begin" backend="google-oauth2" %}"><button type="button" class="btn btn-gplus btn-danger"><i class="fa fa-google-plus left"></i> Google +</button></a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div id="about">
+  <p>
+    <img src="{% static "img/black_logo.png" %}" width="20%" height="inherit" id="intro_logo" /> is an online trading game which allows you to buy and sell stocks at your convenience and at the current market price. The player at the end with highest total stocks
+    and score wins the game.
+  </p>
+</div>
+<div id="dummy">
+
+</div>
+
+<!--/Intro content-->
+
+<!--/.Mask-->
+
+
+{% endblock %}

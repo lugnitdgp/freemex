@@ -1,0 +1,157 @@
+{% extends "app/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<!--Navigation-->
+<header>
+
+    <!--Navbar-->
+    <nav class="navbar navbar-dark navbar-fixed-top scrolling-navbar primary-color">
+
+        <!-- Collapse button-->
+        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx">
+            <i class="fa fa-bars"></i>
+        </button>
+
+        <div class="container">
+            <!--Navbar Brand-->
+            <a href="/">
+                <img class="img-responsive" id="nav-logo" src="{% static "img/logo.png" %}">
+            </a>
+            <!--Collapse content-->
+            <div class="collapse navbar-toggleable-xs" id="collapseEx">
+                <!--Links-->
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/market">Market</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/leaderboard">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+
+                </ul>
+
+
+            </div>
+            <!--/.Collapse content-->
+
+        </div>
+
+    </nav>
+    <!--/.Navbar-->
+
+</header>
+<!--/Navigation-->
+
+<!--Main layout-->
+<div class="table_home">
+    <br>
+    <h1>Portfolio</h1>
+    <hr>
+    <h5>Cash: ${{ player.cash }}</h5>
+    <h5>Value in Stock: ${{ player.value_in_stocks }}</h5>
+    <hr>
+    <h3>Total: {{ player.total_value }}</h3>
+    <br>
+    <!--Card-->
+    <table style="width:100%">
+        {% for player_stock in player_stocks %}
+        {% if player_stock.quantity %}
+        <tr class="animated fadeInDown">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">{{ player_stock.stock.name }}</h4>
+                    <!--Text-->
+                    <p class="card-text">{{ player_stock.stock.code }}</p>
+                    <p class="card-text">{{ player_stock.stock.price }}</p>
+                    <p class="card-text">{{ player_stock.quantity }}</p>
+                    <a href="#" class="btn btn-primary btn-success" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}">Buy More</a>
+                    <a href="#" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#sellModal{{ player_stock.stock.code }}">sell</a>
+                </div>
+            </div>
+        </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="buyModal{{ player_stock.stock.code }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Buy: {{ player_stock.stock.name }}</h4>
+                    </div>
+                    <!--Body-->
+                    <form  class="buy-form" action="/buystock/" method="Post">
+                        {% csrf_token %}
+                        <input type="hidden" name="code" value="{{ player_stock.stock.code }}">
+                        <div class="modal-body">
+                            <div class="md-form">
+                                <input type="number" min="1" id="form1" class="form-control" name="quantity">
+                                <label for="form1" class="">Quantity</label>
+                            </div>
+                        </div>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <button type="submit" id="buyButton" class="btn btn-success">Buy</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+        <div class="modal fade" id="sellModal{{ player_stock.stock.code }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Sell: {{ player_stock.stock.name }}</h4>
+                    </div>
+                    <!--Body-->
+                    <form  class="sell-form" action="/sellstock/" method="Post">
+                        {% csrf_token %}
+                        <input type="hidden" name="code" value="{{ player_stock.stock.code }}">
+                        <div class="modal-body">
+                            <div class="md-form">
+                                <input type="number" min="1" id="form1" class="form-control" name="quantity">
+                                <label for="form1" class="">Quantity</label>
+                            </div>
+                        </div>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <button type="submit" id="buyButton" class="btn btn-success">Sell</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+    <a href="/market" class="btn btn-raised btn-primary">Buy Stocks</a>
+    <!--Card image-->
+    <!--/.Card image-->
+    <!--/.Card-->
+
+    <!--/Main layout-->
+</div>
+{% endblock %}
+
+<h1>Portfolio</h1>
+{{ player.cash }}
+{{ player.value_in_stocks }}
