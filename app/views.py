@@ -3,11 +3,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.views.decorators.cache import cache_page
 from .models import *
 
 
 # Create your views here.
-
 
 def index(request):
     context = {}
@@ -34,6 +34,7 @@ def market(request):
     return render(request, 'app/market.html', context)
 
 
+@cache_page(60 * 2)
 def leaderboard(request):
     context = {}
 
