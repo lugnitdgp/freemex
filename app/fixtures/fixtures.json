@@ -1,0 +1,226 @@
+[
+{
+    "fields": {
+        "price": 0,
+        "code": "GOOG",
+        "name": "Alphabet Inc Class C",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 1
+},
+
+
+{
+    "fields": {
+        "price": 0,
+        "code": "AAPL",
+        "name": "Apple Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 2
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "FB",
+        "name": "Facebook, Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 3
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "ORCL",
+        "name": "Oracle Corporation",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 4
+},
+
+
+{
+    "fields": {
+        "price": 0,
+        "code": "BIDU",
+        "name": "Baidu, Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 5
+},
+
+
+{
+    "fields": {
+        "price": 0,
+        "code": "QCOM",
+        "name": "QUALCOMM Incorporated",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 6
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "ADBE",
+        "name": "Adobe Systems Incorporated",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 7
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "INFY",
+        "name": "Infosys Limited",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 8
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "CTSH",
+        "name": "Cognizant Technology Solutions Corporation",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 9
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "YHOO",
+        "name": "Yahoo! Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 10
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "MSFT",
+        "name": "Microsoft Corporation",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 11
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "AMZN",
+        "name": "Amazon.com Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 12
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "INTC",
+        "name": "Intel Corporation",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 13
+},
+
+
+{
+    "fields": {
+        "price": 0,
+        "code": "CSCO",
+        "name": "Cisco Systems, Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 14
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "EBAY",
+        "name": "eBay Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 15
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "TXN",
+        "name": "Texas Instruments Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 16
+},
+
+
+{
+    "fields": {
+        "price": 0,
+        "code": "TSLA",
+        "name": "Tesla Motors, Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 17
+},
+
+{
+    "fields": {
+        "price": 0,
+        "code": "NFLX",
+        "name": "Netflix, Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 18
+},
+
+
+{
+    "fields": {
+        "price": 0,
+        "code": "NVDA",
+        "name": "NVIDIA Corporation",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 19
+},
+{
+    "fields": {
+        "price": 0,
+        "code": "EA",
+        "name": "Electronic Arts Inc.",
+        "diff": 0
+    },
+    "model": "app.stock",
+    "pk": 20
+}
+]

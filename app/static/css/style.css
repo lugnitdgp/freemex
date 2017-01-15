@@ -191,3 +191,32 @@
   text-align: center;
   margin: 0 auto;
 }
+
+.marketInfo {
+}
+
+.marketChart {
+  min-height: 16em;
+}
+
+.stock-info{
+  text-align: right;
+  display: block;
+  float: right;
+  padding: 0 1em;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}
+
+
+.buttons {
+  display: block;
+  float: none;
+  clear: both;
+}

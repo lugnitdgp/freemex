@@ -13,6 +13,7 @@ def fetch_quotes(symbols):
         query_string = query_string + "NASDAQ:" + symbol + ","
 
     link = "http://finance.google.com/finance/info?client=ig&q=" + query_string
+    print(link)
     try:
         response = requests.get(link)
     except:
