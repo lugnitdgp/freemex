@@ -236,3 +236,9 @@ body {
 .market-buttons {
   float: left;
 }
+
+@media (max-width:600px) {
+  .navbar-nav {
+    clear: both;
+  }
+}
