@@ -1,5 +1,7 @@
-body {
-  margin-top: 1em;
+@media (max-width:600px) {
+  body {
+    margin-top: 1.2em;
+  }
 }
 
 #nav-logo {
