@@ -243,4 +243,8 @@
   .navbar-nav {
     clear: both;
   }
+
+  #collapseEx {
+    clear: both;
+  }
 }
