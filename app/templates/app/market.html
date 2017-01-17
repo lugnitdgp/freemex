@@ -63,6 +63,7 @@
             <h4 class="card-title">{{ stock.name }}</h4>
             <!--Text-->
             <div class="marketInfo">
+                <p class="card-text stock-info"><a target="_blank" href="https://www.google.com/finance?q={{ stock.code }}">Details</a></p>
                 {% if stock.diff >= 0 %}
                 <p class="card-text stock-info up">
                     {{ stock.diff }} <i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -74,9 +75,9 @@
                 {% endif %}
                 <p class="card-text stock-info">Price: {{ stock.price }}</p>
                 <p class="card-text stock-info">{{ stock.code }}</p>
-            </div>
-            <div class="buttons">
-                <a href="#" class="btn btn-primary btn-success" data-toggle="modal" data-target="#buyModal{{ stock.code }}">Buy</a>
+                <div class="market-buttons">
+                    <a href="#" class="btn btn-primary btn-success" data-toggle="modal" data-target="#buyModal{{ stock.code }}">Buy</a>
+                </div>
             </div>
         </div>
     </div>
@@ -120,7 +121,3 @@
     <!--/Main layout-->
 </div>
 {% endblock %}
-
-<h1>Portfolio</h1>
-{{ player.cash }}
-{{ player.value_in_stocks }}

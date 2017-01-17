@@ -232,3 +232,7 @@ body {
 #about li {
   padding-top: 0.2em;
 }
+
+.market-buttons {
+  float: left;
+}
