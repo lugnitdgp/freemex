@@ -10,9 +10,22 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Freemex | Mukti 2017</title>
-    <link rel="icon" 
-      type="image/png" 
-      href="{% static "img/favicon.png" %}">
+    <link rel="icon" type="image/png" href="{% static "img/favicon.png" %}">
+
+
+    <!-- META TAGS -->
+    <meta name="description" content="Freemex - MUKTI 2017">
+    <meta name="keywords" content="Freemex, stock, market, share, equity, MUKTI,MUKTI 2K17" />
+    <meta name="author" content="GNU Linux Users' Group">
+
+    <!-- SOCIAL MEDIA META -->
+    <meta property="og:title" content="Freemex - Mukti 2017"/>
+    <meta property="og:url" content="http://freemex.mkti.in/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Freemex is an online trading game which allows you to buy and sell stocks at your convenience and at the current market price. The player at the end with highest total stocks and cash wins the game.
+" />
+    <meta property="og:image" content="http://freemex.mkti.in{% static "img/black_logo.png" %}" />
+
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
@@ -47,7 +60,7 @@
     <script type="text/javascript" src="{% static "js/main.js" %}"></script>
 
     <script type="text/javascript">
-    setTimeout("location.reload(true);",120000);
+        setTimeout("location.reload(true);",120000);
     </script>
     {% block extrajs %}{% endblock %}
 </body>
