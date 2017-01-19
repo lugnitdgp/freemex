@@ -59,9 +59,11 @@
     <hr>
     <h5>Cash in your hand: $<span id="playercash">{{ player.cash }}</span></h5>
     <br>
+    <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
+    <br><br>
     <!--Card-->
     {% for stock in all_stocks %}
-    <div class="card">
+    <div class="card market-card" data-name="{{ stock.name }}">
         <div class="card-block">
             <h4 class="card-title">{{ stock.name }}</h4>
             <!--Text-->

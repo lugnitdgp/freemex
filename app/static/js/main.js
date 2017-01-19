@@ -69,3 +69,21 @@ function leaderboardSearch() {
     }
   }
 }
+
+function marketSearch() {
+  // Declare variables
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("market-search");
+  filter = input.value.toUpperCase();
+  
+  cards = $(".market-card");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < cards.length; i++) {
+      if (cards[i].getAttribute('data-name').toUpperCase().indexOf(filter) > -1) {
+        cards[i].style.display = "";
+      } else {
+        cards[i].style.display = "none";
+      }
+  }
+}

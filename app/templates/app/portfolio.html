@@ -57,7 +57,7 @@
     <br>
     <h1>Portfolio</h1>
     <hr>
-    <h5>Cash: ${{ player.cash }}</h5>
+    <h5>Cash: $<span id="playercash">{{ player.cash }}</span></h5>
     <h5>Value in Stock: ${{ player.value_in_stocks }}</h5>
     <hr>
     <h3>Total: {{ player.total_value }}</h3>
@@ -72,7 +72,7 @@
                     <h4 class="card-title">{{ player_stock.stock.name }}</h4>
                     <!--Text-->
                     <div class="marketInfo">
-                    {% if player_stock.stock.diff >= 0 %}
+                        {% if player_stock.stock.diff >= 0 %}
                         <p class="card-text stock-info up">
                             {{ player_stock.stock.diff }} <i class="fa fa-arrow-up" aria-hidden="true"></i>
                         </p>
@@ -85,7 +85,7 @@
                         <p class="card-text stock-info">{{ player_stock.stock.code }}</p>
                     </div>
                     <p class="card-text">Quantity: {{ player_stock.quantity }}</p>
-                    <a href="#" class="btn btn-primary btn-success" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}">Buy More</a>
+                    <a href="#" class="btn btn-primary btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}" data-price="{{ player_stock.stock.price }}">Buy More</a>
                     <a href="#" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#sellModal{{ player_stock.stock.code }}">sell</a>
                 </div>
             </div>
@@ -101,6 +101,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title" id="myModalLabel">Buy: {{ player_stock.stock.name }}</h4>
+                        <hr>
+                        <h5>Max you can buy: <span class="maxqty">Unknown</span></h5>
                     </div>
                     <!--Body-->
                     <form  class="buy-form" action="/buystock/" method="Post">
