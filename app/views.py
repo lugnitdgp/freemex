@@ -22,6 +22,11 @@ def index(request):
     return render(request, 'app/landing.html', context)
 
 
+def rules(request):
+    context = {}
+    return render(request, 'app/rules.html', context)
+
+
 @login_required
 def market(request):
     context = {}

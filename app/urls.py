@@ -18,6 +18,9 @@ urlpatterns = [
     # Sell stock
     url(r'^sellstock/$', views.sellStock, name='sellStock'),
 
+    # Rules
+    url(r'^rules/$', views.rules, name='rules'),
+
     # social login urls
     url('', include('social.apps.django_app.urls', namespace='social')),
 

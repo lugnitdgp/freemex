@@ -38,3 +38,13 @@ $('.sell-form').on('submit', function(event){
     });
     return false;
 });
+
+
+$('.market-buy-button').click(function(){
+    var pcash = $('#playercash').html();
+    var stockprice = $(this).attr("data-price");
+    console.log(pcash);
+    console.log(stockprice);
+    console.log(parseInt(pcash/stockprice));
+    $('.maxqty').text(parseInt(pcash/stockprice));
+});
