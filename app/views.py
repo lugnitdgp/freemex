@@ -64,7 +64,8 @@ def buyStock(request):
                                 content_type="application/json")
 
         stockObj = Stock.objects.get(code=requestedStockCode)
-        playerObj = Player.objects.get(user=request.user)
+        playerObj = Player.objects.select_for_update().filter(user=request.user)[0]
+        print(playerObj.cash, stockObj)
         availableMoney = playerObj.cash
         stockPrice = stockObj.price
         print(stockPrice)
@@ -74,7 +75,7 @@ def buyStock(request):
             try:
                 print("BOUGHT")
                 # update player to stock table
-                playerStockList = PlayerStock.objects.filter(
+                playerStockList = PlayerStock.objects.select_for_update().filter(
                     player=playerObj, stock=stockObj)
                 if(playerStockList.count()):
                     playerStock = playerStockList[0]
@@ -129,13 +130,13 @@ def sellStock(request):
                                 content_type="application/json")
 
         stockObj = Stock.objects.get(code=requestedStockCode)
-        playerObj = Player.objects.get(user=request.user)
+        playerObj = Player.objects.select_for_update().filter(user=request.user)[0]
         availableMoney = playerObj.cash
         stockPrice = stockObj.price
         print(stockPrice)
         print(requestedStockCount)
 
-        playerStockList = PlayerStock.objects.filter(
+        playerStockList = PlayerStock.objects.select_for_update().filter(
             player=playerObj, stock=stockObj)
 
         if(playerStockList.count() and

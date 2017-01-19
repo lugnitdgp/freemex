@@ -27,6 +27,7 @@ def fetch_quotes(symbols):
     return quotes
 
 
+@transaction.atomic
 def update_all_stock_prices():
     all_stocks = Stock.objects.all()
     symbol_list = [s.code for s in all_stocks]
@@ -41,7 +42,10 @@ def update_all_stock_prices():
 def update_all_player_assets():
     all_players = Player.objects.all()
     for player in all_players:
-        player.value_in_stocks = 0
-        for j in PlayerStock.objects.filter(player=player):
-            player.value_in_stocks += j.stock.price * j.quantity
-        player.save()
+        playerObj = Player.objects.select_for_update().filter(
+            user=player.user)[0]
+        playerObj.value_in_stocks = 0
+        for j in PlayerStock.objects.select_for_update().filter(player=playerObj):
+            playerObj.value_in_stocks += j.stock.price * j.quantity
+        playerObj.save()
+        print("updated ", playerObj)
