@@ -275,3 +275,16 @@
 .ungineering-footer img{
   max-width: 8em;
 }
+
+.citygym-logo {
+  display: block;
+  width: auto;
+  padding: 1em;
+  position: absolute;
+  top: 6em;
+  right: 0;
+}
+.citygym-logo img {
+  width: 12em;
+  max-width: 50vw;
+}
