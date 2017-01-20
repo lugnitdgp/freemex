@@ -27,6 +27,11 @@ def rules(request):
     return render(request, 'app/rules.html', context)
 
 
+def engage(request):
+    context = {}
+    return render(request, 'app/engage.html', context)
+
+
 @login_required
 def market(request):
     context = {}

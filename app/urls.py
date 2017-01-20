@@ -21,6 +21,9 @@ urlpatterns = [
     # Rules
     url(r'^rules/$', views.rules, name='rules'),
 
+    # Engage
+    url(r'^engage/$', views.engage, name='engage'),
+
     # social login urls
     url('', include('social.apps.django_app.urls', namespace='social')),
 
