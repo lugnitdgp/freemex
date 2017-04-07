@@ -1,12 +1,12 @@
 **_Freemex_**
 --------
-#**Building from Source**#
+# Building from Source
 ----------------------
 Online trading is the act of placing buy/sell orders for financial securities and/or currencies with the use of a brokerage's internet-based proprietary trading platforms. ... 
 Stocks, bonds, options, futures and currencies can all be traded online.
 Freemex-In this project you have to contribute **in building the app from the source code.** 
 
-##Prerequisites##
+## Prerequisites
 --------------
 * HTML
 * CSS
