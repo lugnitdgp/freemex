@@ -68,7 +68,7 @@
 
     + From the drop-down, select OAuth client ID.
 
-    + On the next screen, select the application type (web application in this case) and enter your authorized javascript origins and redirect uri. For now, just set the origin as http://localhost:8000 and the redirect URI as http://localhost:8000/api/v1/complete/google-oauth2/
+    + On the next screen, select the application type (web application in this case) and enter your authorized javascript origins and redirect uri. For now, just set the origin as http://localhost:8000 and the redirect URI as http://localhost:8000/complete/google-oauth2/
 
     + Now, go to `settings.py` and add your OAuth credentials like this:
 

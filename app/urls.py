@@ -25,9 +25,8 @@ urlpatterns = [
     url(r'^engage/$', views.engage, name='engage'),
 
     # social login urls
-    url('', include('social.apps.django_app.urls', namespace='social')),
+    url('', include('social_django.urls', namespace='social')),
 
     # logout url
-    url(r'^logout/$', logout,
-        {'next_page': '/'})
+    url(r'^logout/$', logout, {'next_page': '/'})
 ]

@@ -35,8 +35,8 @@
         <p id="intro">NASDAQ Timings: 8PM - 2:30AM IST</p>
       </li>
       <li>
-        <a href="{% url "social:begin" backend="facebook" %}"><button type="button" class="btn btn-fb btn-primary primary-color-dark"><i class="fa fa-facebook left"></i> Facebook</button></a>
-        <a href="{% url "social:begin" backend="google-oauth2" %}"><button type="button" class="btn btn-gplus btn-danger"><i class="fa fa-google-plus left"></i> Google +</button></a>
+        <a href="{% url 'social:begin' 'facebook' %}"><button type="button" class="btn btn-fb btn-primary primary-color-dark"><i class="fa fa-facebook left"></i> Facebook</button></a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}"><button type="button" class="btn btn-gplus btn-danger"><i class="fa fa-google-plus left"></i> Google +</button></a>
       </li>
     </ul>
   </div>
