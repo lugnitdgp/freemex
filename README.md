@@ -78,7 +78,7 @@
 
     ```
 
-8. Generate Google+ OAuth credentials with the following steps:
+8. Generate Facebook login credentials with the following steps:
 
     + Go to [Facebook Developers Console](https://developers.facebook.com/)
 
@@ -103,6 +103,7 @@
 9.  Migrate your database and run the Django Development Server.
 
     ```
+    ./manage.py makemigrations
     ./manage.py migrate
     ./manage.py runserver
 
