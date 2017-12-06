@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('quantity', models.IntegerField(default=0)),
-                ('player', models.ForeignKey(to='app.Player')),
+                ('player', models.ForeignKey(to='app.Player', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -32,6 +32,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='playerstock',
             name='stock',
-            field=models.ForeignKey(to='app.Stock'),
+            field=models.ForeignKey(to='app.Stock', on_delete=models.CASCADE),
         ),
     ]

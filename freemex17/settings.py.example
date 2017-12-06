@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'app',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 
     'social_django.middleware.SocialAuthExceptionMiddleware',
-)
+]
 
 ROOT_URLCONF = 'freemex17.urls'
 
@@ -178,7 +178,7 @@ SOCIAL_AUTH_PIPELINE = (
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
-    
+
     'django.contrib.auth.backends.ModelBackend',
 )
 
