@@ -8,7 +8,7 @@ from django.db.models.signals import post_save
 
 
 class Player(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     cash = models.DecimalField(max_digits=19,
                                decimal_places=2,
                                default=500000.00)
@@ -37,8 +37,8 @@ class Stock(models.Model):
 
 
 class PlayerStock(models.Model):
-    player = models.ForeignKey(Player)
-    stock = models.ForeignKey(Stock)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
 
     def __str__(self):
