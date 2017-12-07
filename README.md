@@ -106,10 +106,28 @@
     ./manage.py makemigrations
     ./manage.py migrate
     ./manage.py runserver
-
+    
     ```
 
 10. Open `http://localhost:8000` in your browser. (Opening `http://127.0.0.1:8000` will cause problems with Social Login)
+
+## Starting the game
+
+1. Add the cronjob
+
+    ```
+    ./manage.py crontab add
+
+    ```
+
+2. Load the fixtures
+
+    ```
+    ./manage.py loaddata fixtures.json
+
+    ```
+
+3. Run the server and the prices should get updated every minute. Now, buy and sell stocks to make profit. Enjoy!
 
 ## For contributors
 
