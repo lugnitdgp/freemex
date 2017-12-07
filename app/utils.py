@@ -1,29 +1,28 @@
 import requests
-import json
 from .models import *
 from django.db import transaction
+from django.conf import settings
 
 
 def fetch_quotes(symbols):
-    """Fetch stock prices from list of symbols
-    """
-    quotes = {}
-    query_string = ""
-    for symbol in symbols:
-        query_string = query_string + "NASDAQ:" + symbol + ","
+    """Fetch stock prices from list of symbols"""
 
-    link = "http://finance.google.com/finance/info?client=ig&q=" + query_string
-    print(link)
+    quotes = {}
+    query_string = ','.join(symbols)
+    link = "https://api.iextrading.com/1.0/stock/market/batch?symbols={}&types=quote".format(query_string)
+    # print(link)
+
     try:
         response = requests.get(link)
     except:
         return None
     if response.status_code != 200:
         return None
-    content = response.text
-    data = json.loads(content[3:])
+
+    data = response.json()
     for stock in data:
-        quotes[stock['t']] = stock
+        quotes[stock] = data[stock]['quote']
+
     return quotes
 
 
@@ -33,8 +32,9 @@ def update_all_stock_prices():
     symbol_list = [s.code for s in all_stocks]
     quotes = fetch_quotes(symbol_list)
     for stock in all_stocks:
-        stock.price = quotes[stock.code]['l']
-        stock.diff = quotes[stock.code]['c']
+        # print("price=", quotes[stock.code]['latestPrice'], "change=", quotes[stock.code]['change'])
+        stock.price = quotes[stock.code]['latestPrice']
+        stock.diff = quotes[stock.code]['change']
         stock.save()
 
 

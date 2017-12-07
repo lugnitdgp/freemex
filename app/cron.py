@@ -2,7 +2,9 @@ from .utils import *
 
 
 def updatejob():
-    print("updating stock prices..")
+
+    # Update all the stock prices
     update_all_stock_prices()
-    print("updating player assets..")
+
+    # Update all the players' assets
     update_all_player_assets()

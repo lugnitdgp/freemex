@@ -104,8 +104,8 @@
 {
     "fields": {
         "price": 0,
-        "code": "YHOO",
-        "name": "Yahoo! Inc.",
+        "code": "AABA",
+        "name": "Altaba Inc.",
         "diff": 0
     },
     "model": "app.stock",
