@@ -3,8 +3,8 @@ $('.buy-form').on('submit', function(event){
     console.log("form submitted!");  // sanity check
     $('#loader').fadeIn();
     $.ajax({
-        type: $(this).attr('method'), 
-        url: this.action, 
+        type: $(this).attr('method'),
+        url: this.action,
         data: $(this).serialize(),
         context: this,
         success: function(data, status) {
@@ -24,8 +24,8 @@ $('.sell-form').on('submit', function(event){
     $('#loader').fadeIn();
 
     $.ajax({
-        type: $(this).attr('method'), 
-        url: this.action, 
+        type: $(this).attr('method'),
+        url: this.action,
         data: $(this).serialize(),
         context: this,
         success: function(data, status) {
@@ -43,9 +43,6 @@ $('.sell-form').on('submit', function(event){
 $('.market-buy-button').click(function(){
     var pcash = $('#playercash').html();
     var stockprice = $(this).attr("data-price");
-    console.log(pcash);
-    console.log(stockprice);
-    console.log(parseInt(pcash/stockprice));
     $('.maxqty').text(parseInt(pcash/stockprice));
 });
 
@@ -54,7 +51,7 @@ function leaderboardSearch() {
   var input, filter, table, tr, td, i;
   input = document.getElementById("leaderboard-search");
   filter = input.value.toUpperCase();
-  table = document.getElementById("leaderboard_table_body");
+  table = document.getElementById("leaderboard-table-body");
   tr = table.getElementsByTagName("tr");
 
   // Loop through all table rows, and hide those who don't match the search query
@@ -75,7 +72,7 @@ function marketSearch() {
   var input, filter, table, tr, td, i;
   input = document.getElementById("market-search");
   filter = input.value.toUpperCase();
-  
+
   cards = $(".market-card");
 
   // Loop through all table rows, and hide those who don't match the search query

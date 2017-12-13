@@ -2,15 +2,16 @@
 {% load staticfiles %}
 
 {% block content %}
-{% include "app/includes/navbar.html" %}
+{% include "app/includes/navbar.html" with current="Engage" %}
 
 <!--Main layout-->
-<div class="table_home">
+<div class="container engage">
     <br>
+    <p class="text-right">Logged in as <strong>{{ player.user }}</strong></p>
     <h1>Engage</h1>
     <hr>
     <br>
-    <!--Card-->
+
     <div id="disqus_thread"></div>
     <script>
     /**
@@ -33,14 +34,7 @@
         Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
     </noscript>
 
-<!--Card image-->
-<!--/.Card image-->
-<!--/.Card-->
-
-<!--/Main layout-->
 </div>
-{% endblock %}
+<!--/Main layout-->
 
-<h1>Portfolio</h1>
-{{ player.cash }}
-{{ player.value_in_stocks }}
+{% endblock %}

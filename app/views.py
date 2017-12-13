@@ -10,6 +10,7 @@ from .models import *
 # Create your views here.
 
 def index(request):
+
     context = {}
 
     if request.user.is_authenticated():
@@ -18,17 +19,29 @@ def index(request):
 
         context['player'] = playerObj
         context['player_stocks'] = playerStocks
+
         return render(request, 'app/portfolio.html', context)
+
     return render(request, 'app/landing.html', context)
 
 
 def rules(request):
     context = {}
+
+    if request.user.is_authenticated():
+        playerObj = Player.objects.get(user=request.user)
+        context['player'] = playerObj
+
     return render(request, 'app/rules.html', context)
 
 
 def engage(request):
     context = {}
+
+    if request.user.is_authenticated():
+        playerObj = Player.objects.get(user=request.user)
+        context['player'] = playerObj
+
     return render(request, 'app/engage.html', context)
 
 
@@ -48,9 +61,11 @@ def market(request):
 def leaderboard(request):
     context = {}
 
+    playerObj = Player.objects.get(user=request.user)
     players = Player.objects.all()
     players = sorted(players, key=lambda a: a.total_value(), reverse=True)
 
+    context['player'] = playerObj
     context['players'] = players
     return render(request, 'app/leaderboard.html', context)
 

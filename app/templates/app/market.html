@@ -2,24 +2,26 @@
 {% load staticfiles %}
 
 {% block content %}
-{% include "app/includes/navbar.html" %}
+{% include "app/includes/navbar.html" with current="Market" %}
 
 <!--Main layout-->
-<div class="table_home">
+<div class="container market">
     <br>
+    <p class="text-right">Logged in as <strong>{{ player.user }}</strong></p>
     <h1>Market</h1>
     <hr>
     <h5>Cash in your hand: $<span id="playercash">{{ player.cash }}</span></h5>
     <br>
     <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
     <br><br>
-    <!--Card-->
+
     {% for stock in all_stocks %}
+
+    <!--Card-->
     <div class="card market-card" data-name="{{ stock.name }}">
-        <div class="card-block">
+        <div class="card-body">
             <h4 class="card-title">{{ stock.name }}</h4>
-            <!--Text-->
-            <div class="marketInfo">
+            <div class="market-info">
                 <p class="card-text stock-info"><a target="_blank" href="https://www.google.com/finance?q=NASDAQ:{{ stock.code }}">Details</a></p>
                 {% if stock.diff >= 0 %}
                 <p class="card-text stock-info up">
@@ -38,25 +40,22 @@
             </div>
         </div>
     </div>
+
     <!-- Modal -->
-    <div class="modal fade" id="buyModal{{ stock.code }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <!--Content-->
+    <div class="modal fade" id="buyModal{{ stock.code }}" tabindex="-1" role="dialog" aria-labelledby="buyModalLabel" aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
             <div class="modal-content">
-                <!--Header-->
-                <div class="modal-header">
+                <div class="modal-header blue darken-3 white-text">
+                    <h4 class="modal-title" id="buyModalLabel">{{ stock.name }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">{{ stock.name }}</h4>
-                    <hr>
-                    <h5>Max you can buy: <span class="maxqty">Unknown</span></h5>
                 </div>
-                <!--Body-->
                 <form  class="buy-form" action="/buystock/" method="Post">
                     {% csrf_token %}
                     <input type="hidden" name="code" value="{{ stock.code }}">
                     <div class="modal-body">
+                        <h6>Max you can buy: <span class="maxqty">Unknown</span></h6>
                         <div class="md-form">
                             <input type="number" min="1" id="form1" class="form-control" name="quantity">
                             <label for="form1" class="">Quantity</label>
@@ -69,14 +68,11 @@
                     </div>
                 </form>
             </div>
-            <!--/.Content-->
         </div>
     </div>
     {% endfor %}
-    <!--Card image-->
-    <!--/.Card image-->
-    <!--/.Card-->
 
-    <!--/Main layout-->
 </div>
+<!--/Main layout-->
+
 {% endblock %}

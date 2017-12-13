@@ -1,54 +1,44 @@
 {% load staticfiles %}
 
-<!--Navigation-->
-<header>
+<!--Navbar-->
+<nav class="mb-1 navbar navbar-expand-sm navbar-dark primary-color">
 
-    <!--Navbar-->
-    <nav class="navbar navbar-dark navbar-fixed-top scrolling-navbar primary-color">
+    <div class="container">
 
-        <!-- Collapse button-->
-        <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapseEx">
-            <i class="fa fa-bars"></i>
+        <!-- Navbar Brand -->
+        <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static "img/logo.png" %}"></a>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="container">
-            <!--Navbar Brand-->
-            <a href="/">
-                <img class="img-responsive" id="nav-logo" src="{% static "img/logo.png" %}">
-            </a>
-            <!--Collapse content-->
-            <div class="collapse navbar-toggleable-xs" id="collapseEx">
-                <!--Links-->
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/market">Market</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/leaderboard">Leaderboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/rules">Rules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/engage">Engage</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
+        <!-- Collapse content -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <!--Links-->
+            <ul class="navbar-nav">
+                <li class="nav-item {% if current == 'Home' %}active{% endif %}">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item {% if current == 'Market' %}active{% endif %}">
+                    <a class="nav-link" href="/market">Market</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current == 'Leaderboard' %}active{% endif %}" href="/leaderboard">Leaderboard</a>
+                </li>
+                <li class="nav-item {% if current == 'Rules' %}active{% endif %}">
+                    <a class="nav-link" href="/rules">Rules</a>
+                </li>
+                <li class="nav-item {% if current == 'Engage' %}active{% endif %}">
+                    <a class="nav-link" href="/engage">Engage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
 
-                </ul>
-
-
-            </div>
-            <!--/.Collapse content-->
+            </ul>
 
         </div>
-
-    </nav>
-    <!--/.Navbar-->
-
-</header>
-<!--/Navigation-->
+    </div>
+</nav>
+<!--/.Navbar-->

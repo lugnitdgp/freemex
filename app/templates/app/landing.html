@@ -1,75 +1,38 @@
 {% extends "app/base.html" %}
 {% load staticfiles %}
 
+
 {% block content %}
 
-<!--Mask-->
+<div class="container-fluid landing-page">
 
-<div class="Main-page_logo">
-  <a href="http://mkti.in">
-    <img src="{% static "img/mukti-logo.png" %}" width="18%" height: "auto"/>
-  </a>
-</div>
+    <header class="landing">
+        <div class="landing-bg"></div>
+        <div class="mukti-logo">
+            <a href="http://mkti.in">
+                <img src="{% static "img/mukti-logo.png" %}">
+            </a>
+        </div>
+        <div class="sponsor-logo">
+            <a href="http://ungineering.com/" target="_blank"><img class="ungineering-logo" src="{% static "img/Ungineering-logo.png" %}"></a>
+            <img class="citygym-logo" src="{% static "img/citygym.jpg" %}">
+        </div>
+        <div class="content">
+            <img class="freemex-logo" src="{% static "img/logo.png" %}"/>
+            <p class="nasdaq-intro">NASDAQ Timings: 8PM - 2:30AM IST</p>
+            <div class="login-buttons">
+                <a class="btn btn-fb" href="{% url 'social:begin' 'facebook' %}" role="button">
+                    <i class="fa fa-facebook left"></i> Facebook
+                </a>
+                <a class="btn btn-gplus" href="{% url 'social:begin' 'google-oauth2' %}" role="button">
+                    <i class="fa fa-google-plus left"></i> Google+
+                </a>
+            </div>
+        </div>
+    </header>
 
-<div class="ungineering-logo">
-  <a href="http://ungineering.com/" target="_blank">
-    <img src="{% static "img/Ungineering-logo.png" %}"/>
-  </a>
-</div>
-<div class="citygym-logo">
-  <img src="{% static "img/citygym.jpg" %}"/>
-</div>
-<div class="view"></div>
-
-
-
-<div class="contain">
-  <div class="flex-center">
-    <ul>
-      <li>
-        <img class="Freemex-logo" src="{% static "img/logo.png" %}"/>
-      </li>
-      <li>
-        <p id="intro">NASDAQ Timings: 8PM - 2:30AM IST</p>
-      </li>
-      <li>
-        <a href="{% url 'social:begin' 'facebook' %}"><button type="button" class="btn btn-fb btn-primary primary-color-dark"><i class="fa fa-facebook left"></i> Facebook</button></a>
-        <a href="{% url 'social:begin' 'google-oauth2' %}"><button type="button" class="btn btn-gplus btn-danger"><i class="fa fa-google-plus left"></i> Google +</button></a>
-      </li>
-    </ul>
-  </div>
-</div>
-<div id="about">
-  <hr>
-  <h5>
-    <img src="{% static "img/black_logo.png" %}" width="20%" height="inherit" id="intro_logo" /> is an online trading game which allows you to buy and sell stocks at your convenience and at the current market price. The player at the end with highest total stocks
-    and cash wins the game.
-  </h5><hr><br>
-  <h1>Rules</h1>
-  <ol>
-    <li>Freemex contest for Mukti 2017 will begin at 8PM on 18 Jan 2017.  </li>
-    <li>NASDAQ Opens at 8PM and closes at 2.30AM (IST). The price of stocks are updated only in this period.</li>
-    <li>Learn more about NASDAQ Timings <a href="http://www.nasdaq.com/about/trading-schedule.aspx">here</a>.</li>
-    <li>Contest will end at 2.30AM on 24 Jan 2017.</li>
-    <li>Person with maximum total asset wins.</li>
-    <li>A player must participate in fruitful trade atleast once in order to win.</li>
-  </ol>
-  <hr>
-  <h1>Note</h1>
-  <ol>
-    <li>Stock prices are updated every 2 minutes.</li>
-    <li>Leaderboard is updated every 2 minutes.</li>
-    <li>You may notice some after hour fluctuations in stock prices which are normal.</li>
-  </ol>
-
+    {% include "app/includes/rules.html" %}
 
 </div>
-<div id="dummy">
-
-</div>
-
-<!--/Intro content-->
-
-<!--/.Mask-->
 
 {% endblock %}
