@@ -28,5 +28,8 @@ urlpatterns = [
     url('', include('social_django.urls', namespace='social')),
 
     # logout url
-    url(r'^logout/$', logout, {'next_page': '/'})
+    url(r'^logout/$', logout, {'next_page': '/'}),
+
+    # Stock Price Json data
+    url(r'view/stockprice', views.stockPrices, name='stockPrice'),
 ]

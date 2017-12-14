@@ -28,9 +28,9 @@ class Stock(models.Model):
     code = models.CharField(max_length=20, db_index=True)
     price = models.DecimalField(max_digits=19,
                                 decimal_places=2)
-
     diff = models.DecimalField(max_digits=19,
                                decimal_places=2)
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.code)

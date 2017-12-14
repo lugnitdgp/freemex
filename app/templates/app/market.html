@@ -1,5 +1,6 @@
 {% extends "app/base.html" %}
 {% load staticfiles %}
+{% load tz %}
 
 {% block content %}
 {% include "app/includes/navbar.html" with current="Market" %}
@@ -14,25 +15,26 @@
     <br>
     <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
     <br><br>
+    <p class="text-right">Page last updated on: <strong id="last-updated">{% timezone "Asia/Calcutta" %}{{ last_updated }}{% endtimezone %}</strong></p>
 
     {% for stock in all_stocks %}
 
     <!--Card-->
-    <div class="card market-card" data-name="{{ stock.name }}">
+    <div class="card stock-card" data-name="{{ stock.name }}">
         <div class="card-body">
             <h4 class="card-title">{{ stock.name }}</h4>
             <div class="market-info">
                 <p class="card-text stock-info"><a target="_blank" href="https://www.google.com/finance?q=NASDAQ:{{ stock.code }}">Details</a></p>
                 {% if stock.diff >= 0 %}
-                <p class="card-text stock-info up">
-                    {{ stock.diff }} <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                <p class="card-text stock-info up" id="diff">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
                 </p>
                 {% else %}
-                <p class="card-text stock-info down">
-                    {{ stock.diff }} <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                <p class="card-text stock-info down" id="diff">
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
                 </p>
                 {% endif %}
-                <p class="card-text stock-info">Price: {{ stock.price }}</p>
+                <p class="card-text stock-info">Price: <span id="price"></span></p>
                 <p class="card-text stock-info">{{ stock.code }}</p>
                 <div class="market-buttons">
                     <a href="#" class="btn btn-primary btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ stock.code }}" data-price="{{ stock.price }}">Buy</a>
@@ -57,8 +59,7 @@
                     <div class="modal-body">
                         <h6>Max you can buy: <span class="maxqty">Unknown</span></h6>
                         <div class="md-form">
-                            <input type="number" min="1" id="form1" class="form-control" name="quantity">
-                            <label for="form1" class="">Quantity</label>
+                            <input type="number" min="1" id="form1" class="form-control" placeholder="Quantity" name="quantity">
                         </div>
                     </div>
                     <!--Footer-->

@@ -54,6 +54,8 @@ def market(request):
 
     context['player'] = playerObj
     context['all_stocks'] = all_stocks
+    for stock in all_stocks:
+        context['last_updated'] = stock.last_updated
     return render(request, 'app/market.html', context)
 
 
@@ -74,7 +76,7 @@ def leaderboard(request):
 @transaction.atomic
 def buyStock(request):
     response_data = {}
-    # success = 0 and error = 1
+    # Success = 0 and Error = 1
     response_data['code'] = 1
     response_data['message'] = 'Some Error Occurred'
 
@@ -90,36 +92,32 @@ def buyStock(request):
 
         stockObj = Stock.objects.get(code=requestedStockCode)
         playerObj = Player.objects.select_for_update().filter(user=request.user)[0]
-        print(playerObj.cash, stockObj)
         availableMoney = playerObj.cash
         stockPrice = stockObj.price
-        print(stockPrice)
-        print(requestedStockCount)
         if(availableMoney > (stockPrice * requestedStockCount) and
            requestedStockCount > 0):
             try:
-                print("BOUGHT")
-                # update player to stock table
+
+                # Update player to stock table
                 playerStockList = PlayerStock.objects.select_for_update().filter(
                     player=playerObj, stock=stockObj)
                 if(playerStockList.count()):
                     playerStock = playerStockList[0]
                     playerStock.quantity = playerStock.quantity + requestedStockCount
                     playerStock.save()
-                    print("UPDATED1")
                 else:
                     playerStock = PlayerStock()
                     playerStock.player = playerObj
                     playerStock.stock = stockObj
                     playerStock.quantity = requestedStockCount
                     playerStock.save()
-                    print("UPDATED2")
-                # deduct player money
+
+                # Deduct player cash
                 newAvailableMoney = availableMoney - \
                     (stockPrice * requestedStockCount)
                 playerObj.cash = newAvailableMoney
-                print("CASH DEDUCTED")
-                # change player value in stock
+
+                # Change player value in stock
                 playerObj.value_in_stocks = 0
                 for j in PlayerStock.objects.filter(player=playerObj):
                     playerObj.value_in_stocks += j.stock.price * j.quantity
@@ -140,12 +138,11 @@ def buyStock(request):
 @transaction.atomic
 def sellStock(request):
     response_data = {}
-    # success = 0 and error = 1
+    # Success = 0 and Error = 1
     response_data['code'] = 1
     response_data['message'] = 'Some Error Occurred'
 
     if request.method == 'POST':
-        print(request.POST)
         try:
             requestedStockCode = str(request.POST['code'])
             requestedStockCount = int(request.POST['quantity'])
@@ -158,8 +155,6 @@ def sellStock(request):
         playerObj = Player.objects.select_for_update().filter(user=request.user)[0]
         availableMoney = playerObj.cash
         stockPrice = stockObj.price
-        print(stockPrice)
-        print(requestedStockCount)
 
         playerStockList = PlayerStock.objects.select_for_update().filter(
             player=playerObj, stock=stockObj)
@@ -167,19 +162,18 @@ def sellStock(request):
         if(playerStockList.count() and
            requestedStockCount <= playerStockList[0].quantity):
             try:
-                print("SOLD")
-                # update player to stock table
+
+                # Update player to stock table
                 playerStock = playerStockList[0]
                 playerStock.quantity = playerStock.quantity - requestedStockCount
                 playerStock.save()
-                print("UPDATED1")
 
-                # add player money
+                # Add player money
                 newAvailableMoney = availableMoney + \
                     (stockPrice * requestedStockCount)
                 playerObj.cash = newAvailableMoney
-                print("CASH ADDED")
-                # change player value in stock
+
+                # Change player value in stock
                 playerObj.value_in_stocks = 0
                 for j in PlayerStock.objects.filter(player=playerObj):
                     playerObj.value_in_stocks += j.stock.price * j.quantity
@@ -191,6 +185,19 @@ def sellStock(request):
         else:
             response_data['code'] = 1
             response_data['message'] = 'Cannot sell more than what you have!'
+
+    return HttpResponse(json.dumps(response_data),
+                        content_type="application/json")
+
+
+def stockPrices(request):
+    response_data = {}
+    if request.method == "GET":
+        stockObjects = Stock.objects.all()
+        for stock in stockObjects:
+            response_data[stock.name] = {"stock": stock.code, "price": str(stock.price), "diff": str(stock.diff)}
+
+        response_data['last_updated'] = stock.last_updated.isoformat()
 
     return HttpResponse(json.dumps(response_data),
                         content_type="application/json")
