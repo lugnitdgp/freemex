@@ -9,6 +9,37 @@
 <div class="container portfolio">
     <br>
     <p class="text-right">Logged in as <strong>{{ player.user }}</strong></p>
+    <p class="text-right">
+        <a href="#" class="btn success-color change-username" data-toggle="modal" data-target="#changeUsernameModal" role="button">Change username</a>
+    </p>
+    <!-- Change username modal -->
+    <div class="modal fade" id="changeUsernameModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header warning-color-dark white-text">
+                    <h4 class="modal-title" id="modalTitle">Change your username</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="username-form" action="/change_username/" method="Post">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" value="{{ player.user }}">
+                    <div class="modal-body">
+                        <div class="md-form">
+                            <input type="text" class="form-control" id="username-input" maxlength="150" required="" autofocus="" onkeyup="validateUsername()">
+                            <p class="form-error" style="display: none"><i class="fa fa-exclamation-triangle"></i> <span class="error-message"></span></p>
+                            <label for="username-input">Current username: {{ player.user }}</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                        <button type="submit" id="changeUsernameButton" class="btn btn-danger disabled">Change</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <h1>Portfolio</h1>
     <hr>
     <h5>Cash: $<span id="playercash">{{ player.cash }}</span></h5>
@@ -43,8 +74,8 @@
                 <p class="card-text stock-info">{{ player_stock.stock.code }}</p>
             </div>
             <p class="card-text">Quantity: {{ player_stock.quantity }}</p>
-            <a href="#" class="btn btn-primary btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}" data-price="{{ player_stock.stock.price }}">Buy More</a>
-            <a href="#" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#sellModal{{ player_stock.stock.code }}">sell</a>
+            <a href="#" class="btn btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}" data-price="{{ player_stock.stock.price }}">Buy More</a>
+            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#sellModal{{ player_stock.stock.code }}">sell</a>
         </div>
     </div>
 
@@ -64,7 +95,7 @@
                     <div class="modal-body">
                         <h6>Max you can buy: <span class="maxqty">Unknown</span></h6>
                         <div class="md-form">
-                            <input type="number" min="1" placeholder="Quantity" id="form1" name="quantity">
+                            <input type="number" min="1" placeholder="Quantity" id="form2" name="quantity">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -91,7 +122,7 @@
                     <input type="hidden" name="code" value="{{ player_stock.stock.code }}">
                     <div class="modal-body">
                         <div class="md-form">
-                            <input type="number" min="1" max="{{ player_stock.quantity }}" placeholder="Quantity" id="form1" class="form-control" name="quantity">
+                            <input type="number" min="1" max="{{ player_stock.quantity }}" placeholder="Quantity" id="form3" class="form-control" name="quantity">
                         </div>
                     </div>
                     <div class="modal-footer">

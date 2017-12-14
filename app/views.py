@@ -201,3 +201,39 @@ def stockPrices(request):
 
     return HttpResponse(json.dumps(response_data),
                         content_type="application/json")
+
+@login_required
+def validateUsername(request):
+    username = request.GET.get('user', None)
+    response_text = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return HttpResponse(json.dumps(response_text))
+
+@login_required
+def changeUsername(request):
+    response_data = {}
+    # Success = 0 and Error = 1
+    response_data['code'] = 1
+    response_data['message'] = 'Some Error Occurred'
+
+    if request.method == "POST":
+        try:
+            old_username = str(request.POST['old_username']);
+            new_username = str(request.POST['new_username']);
+        except:
+            response_data['message'] = 'Error in form data'
+            return HttpResponse(json.dumps(response_data),
+                                content_type="application/json")
+
+        if User.objects.filter(username__exact=old_username).exists():
+            user_instance = User.objects.get(username__exact=old_username)
+            user_instance.username = new_username
+            user_instance.save()
+            response_data['code'] = 0
+            response_data['message'] = 'Username Changed Successfully'
+        else:
+            response_data['message'] = 'User does not exist'
+
+        return HttpResponse(json.dumps(response_data),
+                            content_type="application/json")

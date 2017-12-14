@@ -183,6 +183,14 @@ body {
     margin-bottom: 2rem;
 }
 
+.portfolio .change-username {
+    margin-right: 0;
+}
+
+.portfolio .modal .form-error {
+    color: #ff4444;
+}
+
 .market .card {
     margin-top: 2rem;
 }

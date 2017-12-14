@@ -31,5 +31,11 @@ urlpatterns = [
     url(r'^logout/$', logout, {'next_page': '/'}),
 
     # Stock Price Json data
-    url(r'view/stockprice', views.stockPrices, name='stockPrice'),
+    url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
+
+    # Check Username availabilty
+    url(r'^validate_username/$', views.validateUsername, name='validate_username'),
+
+    # Change username
+    url(r'^change_username/$', views.changeUsername, name='chnage_username'),
 ]

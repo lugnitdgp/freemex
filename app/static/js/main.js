@@ -26,10 +26,47 @@ function marketSearch() {
     });
 }
 
+// Ajax call to check the availability of username
+function validateUsername() {
+    var search_query = $("#username-input").val();
+    submit_button = $("#username-input").closest("form").find("button[type=submit]");
+    // console.log(search_query);
+    $.ajax({
+        url: "/validate_username/",
+        data: {
+            'user': search_query
+        },
+        dataType: 'json',
+        success: function(data) {
+            console.log($(".error-message"));
+            if (data.is_taken) {
+                $(".form-error").css({"display": ""});
+                $(".error-message").html("This username is already taken");
+                if (!submit_button.hasClass("disabled")) {
+                    submit_button.addClass("disabled");
+                }
+            } else {
+                if (search_query.length < 5) {
+                    $(".form-error").css({"display": ""});
+                    $(".error-message").html("Username cannot be less than 5 characters");
+                    if (!submit_button.hasClass("disabled")) {
+                        submit_button.addClass("disabled");
+                    }
+                } else {
+                    $(".form-error").css({"display": "none"});
+                    if (submit_button.hasClass("disabled")) {
+                        submit_button.removeClass("disabled");
+                    }
+                }
+            }
+        }
+    });
+}
+
 // Ajax call to update the prices on the market and portfolio page
 function updateStockPrices() {
     $.ajax({
-        url: "view/stockprice",
+        url: "view/stockprice/",
         dataType: 'json',
         success: function(data) {
             $('.stock-card').each(function() {
@@ -94,10 +131,9 @@ $(document).ready(function() {
     });
 
     // Handles the selling of stocks on porfolio page
-    $('.sell-form').on('submit', function(event){
-        event.preventDefault();
+    $('.sell-form').on('submit', function(e){
+        e.preventDefault();
         $('#loader').fadeIn();
-
         $.ajax({
             type: $(this).attr('method'),
             url: this.action,
@@ -112,6 +148,28 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    // Handles the changing of username
+    $('.username-form').on('submit', function(e) {
+        e.preventDefault();
+        $('#loader').fadeIn();
+        $.ajax({
+            type: $(this).attr('method'),
+            url: this.action,
+            data: {
+                'old_username': $(this).children("input[name=username]").attr("value"),
+                'new_username': $('#username-input').val(),
+                'csrfmiddlewaretoken': $(this).children("input[name=csrfmiddlewaretoken]").val()
+            },
+            context: this,
+            success: function(data) {
+                statusCode = data['code'];
+                statusMessage = data['message'];
+                alert(statusMessage);
+                location.reload();
+            }
+        });
+    })
 
     // Updates the maximum number of stocks that can be bought, when modal is opened
     $('.market-buy-button').click(function(){
