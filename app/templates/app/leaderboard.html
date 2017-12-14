@@ -14,7 +14,7 @@
 
     <input type="text" id="leaderboard-search" onkeyup="leaderboardSearch()" placeholder="Search for names..">
 
-    <table class="table table-striped" id="leaderboard_table">
+    <table class="table table-striped leaderboard-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -23,14 +23,14 @@
                 <th>Total Asset</th>
             </tr>
         </thead>
-        <tbody id="leaderboard-table-body">
+        <tbody>
             {% for player in players %}
-                <tr>
+            <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ player.user.first_name }} {{ player.user.last_name }}</td>
                 <td>{{ player }}</td>
                 <td>{{ player.total_value }}</td>
-                </tr>
+            </tr>
             {% endfor %}
         </tbody>
     </table>

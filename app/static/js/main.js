@@ -1,40 +1,29 @@
 // Function to search players in the leaderboard
 function leaderboardSearch() {
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("leaderboard-search");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("leaderboard-table-body");
-    tr = table.getElementsByTagName("tr");
+    var search_query = $("#leaderboard-search").val().toUpperCase();
 
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
+    // Loop through all table rows, and hide those which don't match the search query
+    $(".leaderboard-table tbody tr").each(function() {
+        if ($(this).children('td').eq(1).html().toUpperCase().indexOf(search_query) > -1) {
+            $(this).css({"display": ""});
+        } else {
+            $(this).css({"display": "none"});
         }
-    }
+    });
 }
 
 // Function to search stocks on the market page
 function marketSearch() {
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("market-search");
-    filter = input.value.toUpperCase();
+    var search_query = $("#market-search").val().toUpperCase();
 
-    cards = $(".market-card");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < cards.length; i++) {
-        if (cards[i].attr('data-name').toUpperCase().indexOf(filter) > -1) {
-            cards[i].style.display = "";
+    // Loop through all the cards, and hide those which don't match the search query
+    $(".stock-card").each(function() {
+        if ($(this).attr("data-name").toUpperCase().indexOf(search_query) > -1) {
+            $(this).css({"display": ""});
         } else {
-            cards[i].style.display = "none";
+            $(this).css({"display": "none"});
         }
-    }
+    });
 }
 
 // Ajax call to update the prices on the market and portfolio page
@@ -107,7 +96,6 @@ $(document).ready(function() {
     // Handles the selling of stocks on porfolio page
     $('.sell-form').on('submit', function(event){
         event.preventDefault();
-        console.log("form submitted!");  // sanity check
         $('#loader').fadeIn();
 
         $.ajax({
