@@ -21,6 +21,7 @@
             <img class="freemex-logo" src="{% static "img/logo.png" %}"/>
             <p class="nasdaq-intro">NASDAQ Timings: 8PM - 2:30AM IST</p>
             <div class="login-buttons">
+                <p><a class="btn cyan darken-2" href="#" data-toggle="modal" data-target="#modalLRForm" role="button"><i class="fa fa-sign-in"></i> Login/Register</a></p>
                 <a class="btn btn-fb" href="{% url 'social:begin' 'facebook' %}" role="button">
                     <i class="fa fa-facebook left"></i> Facebook
                 </a>
@@ -30,6 +31,142 @@
             </div>
         </div>
     </header>
+
+    <!--Modal: Login / Register Form-->
+    <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
+
+                <!--Modal cascading tabs-->
+                <div class="modal-c-tabs">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs tabs-2 light-blue darken-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="login" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-user mr-1"></i> Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="register" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-user-plus mr-1"></i> Register</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panels -->
+                    <div class="tab-content">
+                        <!--Panel 7-->
+                        <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+
+                            <!--Body-->
+                            <form class="login-form" action="/login/" method="Post" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="modal-body mb-1">
+                                    <div class="md-form form-sm">
+                                        <i class="fa fa-user prefix"></i>
+                                        <input type="text" id="form1" class="form-control" name="username" autocomplete="off">
+                                        <label for="form1">Your username</label>
+                                    </div>
+
+                                    <div class="md-form form-sm">
+                                        <i class="fa fa-lock prefix"></i>
+                                        <input type="password" id="form2" class="form-control" name="password" autocomplete="off">
+                                        <label for="form2">Your password</label>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-info">Log in <i class="fa fa-sign-in ml-1"></i></button>
+                                    </div>
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer display-footer">
+                                    <div class="options text-center text-md-right mt-1">
+                                        <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
+                                        <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!--/.Panel 7-->
+
+                        <!--Panel 8-->
+                        <div class="tab-pane register-pane fade" id="panel8" role="tabpanel">
+
+                            <form class="registration-form" action="/register/" method="Post" autocomplete="off">
+                                {% csrf_token %}
+                                <!--Body-->
+                                <div class="modal-body">
+                                    <div class="md-form form-sm">
+                                        <i class="fa fa-user prefix"></i>
+                                        <input type="text" id="form3" class="form-control" name="first_name" maxlength="50" required autocomplete="off">
+                                        <label for="form3">Your first name</label>
+                                        <ul class="input-requirements">
+                                            <li>First name cannot be empty <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                            <li>First name must contain only alphabets <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="md-form form-sm">
+                                        <i class="fa fa-user prefix"></i>
+                                        <input type="text" id="form4" class="form-control" name="last_name" maxlength="50" autocomplete="off">
+                                        <label for="form4">Your last name</label>
+                                        <ul class="input-requirements">
+                                            <li>Last name must contain only alphabets <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="md-form form-sm">
+                                        <i class="fa fa-user-plus prefix"></i>
+                                        <input type="text" id="form5" class="form-control" name="username" maxlength="50" required autocomplete="off">
+                                        <label for="form5">Your username</label>
+                                        <ul class="input-requirements">
+                                            <li>Username must have at least 5 characters <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                            <li>Username must not be registered with someone else <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="md-form form-sm">
+                                        <i class="fa fa-lock prefix"></i>
+                                        <input type="password" id="form6" class="form-control" name="password1" maxlength="50" required autocomplete="off">
+                                        <label for="form6">Your password</label>
+                                        <ul class="input-requirements">
+                                            <li>Password must have at least 8 characters <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                            <li>Password should have at least one alphabet <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                            <li>Password should have at least one numeric digit <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                            <li>Password should have at least one special character <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="md-form form-sm">
+                                        <i class="fa fa-lock prefix"></i>
+                                        <input type="password" id="form7" class="form-control" name="password2" maxlength="50" required autocomplete="off">
+                                        <label for="form7">Repeat password</label>
+                                        <ul class="input-requirements">
+                                            <li>Both passwords must match <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="text-center form-sm mt-2">
+                                        <button type="submit" class="btn btn-info">Sign up <i class="fa fa-sign-in ml-1"></i></button>
+                                    </div>
+
+                                </div>
+                                <!--Footer-->
+                                <div class="modal-footer">
+                                    <div class="options text-right">
+                                        <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a></p>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!--/.Panel 8-->
+                    </div>
+
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!--Modal: Login / Register Form-->
 
     {% include "app/includes/rules.html" %}
 

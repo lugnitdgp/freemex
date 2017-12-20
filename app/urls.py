@@ -1,12 +1,27 @@
 from django.conf.urls import include, url
-from django.contrib.auth.views import logout
+from django.contrib.auth.views import login, logout
 from . import views
 
 urlpatterns = [
     # Home Page
     url(r'^$', views.index, name='index'),
 
-    # Market Watch
+    # New user registration
+    url(r'^register/$', views.registerUser, name='register'),
+
+    # User login
+    url(r'^login/$', views.loginUser, name='login'),
+
+    # Username JSON data
+    url(r'get_users/$', views.getUsers, name='get_users'),
+
+    # Change username
+    url(r'^change_username/$', views.changeUsername, name='change_username'),
+
+    # Stock price JSON data
+    url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
+
+    # Market watch
     url(r'^market/$', views.market, name='market'),
 
     # Leaderboard
@@ -27,15 +42,6 @@ urlpatterns = [
     # social login urls
     url('', include('social_django.urls', namespace='social')),
 
-    # logout url
+    # Logout url
     url(r'^logout/$', logout, {'next_page': '/'}),
-
-    # Stock Price Json data
-    url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
-
-    # Check Username availabilty
-    url(r'^validate_username/$', views.validateUsername, name='validate_username'),
-
-    # Change username
-    url(r'^change_username/$', views.changeUsername, name='chnage_username'),
 ]

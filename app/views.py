@@ -1,14 +1,19 @@
 import json
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.decorators.cache import cache_page
+
 from .models import *
+from .forms import RegistrationForm
 
 
 # Create your views here.
 
+
+# Serve the home view
 def index(request):
 
     context = {}
@@ -25,26 +30,117 @@ def index(request):
     return render(request, 'app/landing.html', context)
 
 
-def rules(request):
-    context = {}
+# Register the user from the registration page
+def registerUser(request):
 
-    if request.user.is_authenticated():
-        playerObj = Player.objects.get(user=request.user)
-        context['player'] = playerObj
+    response_data = {}
 
-    return render(request, 'app/rules.html', context)
+    # Success = 0 and Error = 1
+    response_data['code'] = 1
+    response_data['message'] = 'Some Error Occurred'
+
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+            response_data['code'] = 0
+            response_data['message'] = 'User signed up succesfully'
+
+        return HttpResponse(json.dumps(response_data),
+                            content_type="application/json")
 
 
-def engage(request):
-    context = {}
+# User login
+def loginUser(request):
 
-    if request.user.is_authenticated():
-        playerObj = Player.objects.get(user=request.user)
-        context['player'] = playerObj
+    response_data = {}
 
-    return render(request, 'app/engage.html', context)
+    # Success = 0 and Error = 1
+    response_data['code'] = 1
+    response_data['message'] = 'Some Error Occurred'
+
+    if request.method == "POST":
+        username = request.POST.get('username')
+        raw_password = request.POST.get('password')
+        user = authenticate(username=username, password=raw_password)
+        if user is not None:
+            login(request, user)
+
+            response_data['code'] = 0
+            response_data['message'] = 'User logged in succesfully'
+        else:
+            response_data['message'] = 'Wrong username or password'
+
+    return HttpResponse(json.dumps(response_data),
+                        content_type="application/json")
+
+# Get all the player usernames for username validation
+def getUsers(request):
+
+    users = User.objects.all()
+    players = []
+    response_data = {}
+
+    for user in users:
+        if hasattr(user, 'player'):
+            players.append(user.username)
+
+    response_data['users'] = players
+
+    return HttpResponse(json.dumps(response_data),
+                        content_type="application/json")
 
 
+# Handle the change username request
+@login_required
+def changeUsername(request):
+
+    response_data = {}
+
+    # Success = 0 and Error = 1
+    response_data['code'] = 1
+    response_data['message'] = 'Some error occurred'
+
+    if request.method == "POST":
+
+        try:
+            old_username = str(request.POST['current_username']);
+            new_username = str(request.POST['username']);
+        except:
+            response_data['message'] = 'Error in form data'
+            return HttpResponse(json.dumps(response_data),
+                                content_type="application/json")
+
+        if User.objects.filter(username__exact=old_username).exists():
+            user_instance = User.objects.get(username__exact=old_username)
+            user_instance.username = new_username
+            user_instance.save()
+            response_data['code'] = 0
+            response_data['message'] = 'Username changed successfully'
+        else:
+            response_data['message'] = 'User does not exist'
+
+    return HttpResponse(json.dumps(response_data),
+                        content_type="application/json")
+
+
+# Get the stock price JSON data
+def stockPrices(request):
+    response_data = {}
+    if request.method == "GET":
+        stockObjects = Stock.objects.all()
+        for stock in stockObjects:
+            response_data[stock.name] = {"stock": stock.code, "price": str(stock.price), "diff": str(stock.diff)}
+
+        response_data['last_updated'] = stock.last_updated.isoformat()
+
+    return HttpResponse(json.dumps(response_data),
+                        content_type="application/json")
+
+
+# Handle the market watch page view
 @login_required
 def market(request):
     context = {}
@@ -59,6 +155,7 @@ def market(request):
     return render(request, 'app/market.html', context)
 
 
+# Handle the leaderboard page view
 @cache_page(60 * 2)
 def leaderboard(request):
     context = {}
@@ -72,6 +169,7 @@ def leaderboard(request):
     return render(request, 'app/leaderboard.html', context)
 
 
+# Handle the buying of stocks
 @login_required
 @transaction.atomic
 def buyStock(request):
@@ -81,7 +179,6 @@ def buyStock(request):
     response_data['message'] = 'Some Error Occurred'
 
     if request.method == 'POST':
-        print(request.POST)
         try:
             requestedStockCode = str(request.POST['code'])
             requestedStockCount = int(request.POST['quantity'])
@@ -134,6 +231,7 @@ def buyStock(request):
                         content_type="application/json")
 
 
+# Handle the selling of stocks
 @login_required
 @transaction.atomic
 def sellStock(request):
@@ -190,50 +288,25 @@ def sellStock(request):
                         content_type="application/json")
 
 
-def stockPrices(request):
-    response_data = {}
-    if request.method == "GET":
-        stockObjects = Stock.objects.all()
-        for stock in stockObjects:
-            response_data[stock.name] = {"stock": stock.code, "price": str(stock.price), "diff": str(stock.diff)}
+# Handle the rules page view
+def rules(request):
 
-        response_data['last_updated'] = stock.last_updated.isoformat()
+    context = {}
 
-    return HttpResponse(json.dumps(response_data),
-                        content_type="application/json")
+    if request.user.is_authenticated():
+        playerObj = Player.objects.get(user=request.user)
+        context['player'] = playerObj
 
+    return render(request, 'app/rules.html', context)
+
+# Handle the engage page view
 @login_required
-def validateUsername(request):
-    username = request.GET.get('user', None)
-    response_text = {
-        'is_taken': User.objects.filter(username__iexact=username).exists()
-    }
-    return HttpResponse(json.dumps(response_text))
+def engage(request):
 
-@login_required
-def changeUsername(request):
-    response_data = {}
-    # Success = 0 and Error = 1
-    response_data['code'] = 1
-    response_data['message'] = 'Some Error Occurred'
+    context = {}
 
-    if request.method == "POST":
-        try:
-            old_username = str(request.POST['old_username']);
-            new_username = str(request.POST['new_username']);
-        except:
-            response_data['message'] = 'Error in form data'
-            return HttpResponse(json.dumps(response_data),
-                                content_type="application/json")
+    if request.user.is_authenticated():
+        playerObj = Player.objects.get(user=request.user)
+        context['player'] = playerObj
 
-        if User.objects.filter(username__exact=old_username).exists():
-            user_instance = User.objects.get(username__exact=old_username)
-            user_instance.username = new_username
-            user_instance.save()
-            response_data['code'] = 0
-            response_data['message'] = 'Username Changed Successfully'
-        else:
-            response_data['message'] = 'User does not exist'
-
-        return HttpResponse(json.dumps(response_data),
-                            content_type="application/json")
+    return render(request, 'app/engage.html', context)

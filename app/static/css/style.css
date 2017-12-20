@@ -162,6 +162,74 @@ body {
     padding-top: 5%;
 }
 
+.landing-page .modal .nav-tabs {
+    border: 0;
+    padding: .7rem;
+    z-index: 2;
+    border-radius: 2px;
+}
+
+.landing-page .modal .nav-tabs .nav-link {
+    border: 0;
+    color: #fff;
+}
+
+.landing-page .modal .nav-tabs .nav-link.active {
+    background-color: rgba(255,255,255,.2);
+    color: #fff;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    border-radius: 2px;
+}
+
+.landing-page .modal .md-form.form-sm label.active {
+    font-size:.8rem;
+}
+
+.landing-page .registration-form .input-requirements {
+    list-style: none;
+}
+
+.landing-page .registration-form .input-requirements li {
+    color: #4285F4;
+    font-size: 0.85rem;
+    line-height: 1.2rem;
+}
+
+.landing-page .registration-form .input-requirements li > .fa {
+    display: none;
+}
+
+.landing-page .registration-form .input-requirements li.valid {
+    color: #00C851;
+}
+
+.landing-page .registration-form .input-requirements li.valid .fa-check {
+    display: inline;
+}
+
+.landing-page .registration-form .input-requirements li.invalid {
+    color: #FF4444;
+}
+
+.landing-page .registration-form .input-requirements li.invalid .fa-exclamation {
+    display: inline;
+}
+
+
+.landing-page .registration-form input:not([type="submit"]) ~ .input-requirements {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s linear;
+}
+
+.landing-page .registration-form input:not([type="submit"]):focus ~ .input-requirements,
+.landing-page .registration-form input:not([type="submit"]):active ~ .input-requirements {
+    max-height: 100px; /* any large number (bigger then the .input-requirements list) */
+    transition: max-height 1s ease-in;
+}
+
+
 /* ------------------------------- Navbar -------------------------------------- */
 
 
@@ -189,6 +257,48 @@ body {
 
 .portfolio .modal .form-error {
     color: #ff4444;
+}
+
+.portfolio .change-username-form .input-requirements {
+    list-style: none;
+}
+
+.portfolio .change-username-form .input-requirements li {
+    color: #4285F4;
+    font-size: 0.85rem;
+    line-height: 1.2rem;
+}
+
+.portfolio .change-username-form .input-requirements li > .fa {
+    display: none;
+}
+
+.portfolio .change-username-form .input-requirements li.valid {
+    color: #00C851;
+}
+
+.portfolio .change-username-form .input-requirements li.valid .fa-check {
+    display: inline;
+}
+
+.portfolio .change-username-form .input-requirements li.invalid {
+    color: #FF4444;
+}
+
+.portfolio .change-username-form .input-requirements li.invalid .fa-exclamation {
+    display: inline;
+}
+
+.portfolio .change-username-form input:not([type="submit"]) ~ .input-requirements {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s linear;
+}
+
+.portfolio .change-username-form input:not([type="submit"]):focus ~ .input-requirements,
+.portfolio .change-username-form input:not([type="submit"]):active ~ .input-requirements {
+    max-height: 100px; /* any large number (bigger then the .input-requirements list) */
+    transition: max-height 1s ease-in;
 }
 
 .market .card {
@@ -230,13 +340,6 @@ body {
 
 
 /* ------------------------------- Footer ------------------------------- */
-
-.market .card .market-info .stock-info {
-    display: block;
-    float: right;
-    padding: 0 1em;
-    text-align: right;
-}
 
 
 .sharethis-inline-share-buttons {

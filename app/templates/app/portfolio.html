@@ -22,19 +22,22 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="username-form" action="/change_username/" method="Post">
+                <form class="change-username-form" action="/change_username/" method="Post">
                     {% csrf_token %}
-                    <input type="hidden" name="username" value="{{ player.user }}">
+                    <input type="hidden" name="current_username" value="{{ player.user }}">
                     <div class="modal-body">
                         <div class="md-form">
-                            <input type="text" class="form-control" id="username-input" maxlength="150" required="" autofocus="" onkeyup="validateUsername()">
-                            <p class="form-error" style="display: none"><i class="fa fa-exclamation-triangle"></i> <span class="error-message"></span></p>
+                            <input type="text" class="form-control" name="username" maxlength="50" required autofocus>
                             <label for="username-input">Current username: {{ player.user }}</label>
+                            <ul class="input-requirements">
+                                <li>Username must have at least 5 characters <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                                <li>Username must not be registered with someone else <i class="fa fa-check"></i><i class="fa fa-exclamation"></i></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                        <button type="submit" id="changeUsernameButton" class="btn btn-danger disabled">Change</button>
+                        <button type="submit" id="changeUsernameButton" class="btn btn-danger">Change</button>
                     </div>
                 </form>
             </div>
