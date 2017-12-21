@@ -1,7 +1,9 @@
 import requests
-from .models import *
+
 from django.db import transaction
 from django.conf import settings
+
+from .models import *
 
 
 def fetch_quotes(symbols):

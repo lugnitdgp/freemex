@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0001_initial'),
+        ('core', '0001_initial'),
     ]
 
     operations = [
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('quantity', models.IntegerField(default=0)),
-                ('player', models.ForeignKey(to='app.Player', on_delete=models.CASCADE)),
+                ('player', models.ForeignKey(to='core.Player', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -32,6 +32,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='playerstock',
             name='stock',
-            field=models.ForeignKey(to='app.Stock', on_delete=models.CASCADE),
+            field=models.ForeignKey(to='core.Stock', on_delete=models.CASCADE),
         ),
     ]

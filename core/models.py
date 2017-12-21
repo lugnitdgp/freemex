@@ -6,7 +6,6 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 
-
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     cash = models.DecimalField(max_digits=19,
@@ -47,6 +46,6 @@ class PlayerStock(models.Model):
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    if created and not instance.is_staff:
+    if created:
         Player.objects.create(user=instance)
         instance.player.save()

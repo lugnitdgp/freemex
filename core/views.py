@@ -1,4 +1,5 @@
 import json
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
@@ -14,6 +15,7 @@ from .forms import RegistrationForm
 
 
 # Serve the home view
+
 def index(request):
 
     context = {}
@@ -25,12 +27,13 @@ def index(request):
         context['player'] = playerObj
         context['player_stocks'] = playerStocks
 
-        return render(request, 'app/portfolio.html', context)
+        return render(request, 'core/portfolio.html', context)
 
-    return render(request, 'app/landing.html', context)
+    return render(request, 'core/landing.html', context)
 
 
 # Register the user from the registration page
+
 def registerUser(request):
 
     response_data = {}
@@ -53,6 +56,7 @@ def registerUser(request):
 
 
 # User login
+
 def loginUser(request):
 
     response_data = {}
@@ -76,7 +80,9 @@ def loginUser(request):
     return HttpResponse(json.dumps(response_data),
                         content_type="application/json")
 
+
 # Get all the player usernames for username validation
+
 def getUsers(request):
 
     users = User.objects.all()
@@ -94,6 +100,7 @@ def getUsers(request):
 
 
 # Handle the change username request
+
 @login_required
 def changeUsername(request):
 
@@ -127,6 +134,7 @@ def changeUsername(request):
 
 
 # Get the stock price JSON data
+
 def stockPrices(request):
     response_data = {}
     if request.method == "GET":
@@ -141,6 +149,7 @@ def stockPrices(request):
 
 
 # Handle the market watch page view
+
 @login_required
 def market(request):
     context = {}
@@ -152,24 +161,26 @@ def market(request):
     context['all_stocks'] = all_stocks
     for stock in all_stocks:
         context['last_updated'] = stock.last_updated
-    return render(request, 'app/market.html', context)
+    return render(request, 'core/market.html', context)
 
 
 # Handle the leaderboard page view
+
 @cache_page(60 * 2)
 def leaderboard(request):
     context = {}
 
     playerObj = Player.objects.get(user=request.user)
-    players = Player.objects.all()
+    players = map(lambda x: x.player, User.objects.filter(is_staff=False))
     players = sorted(players, key=lambda a: a.total_value(), reverse=True)
 
     context['player'] = playerObj
     context['players'] = players
-    return render(request, 'app/leaderboard.html', context)
+    return render(request, 'core/leaderboard.html', context)
 
 
 # Handle the buying of stocks
+
 @login_required
 @transaction.atomic
 def buyStock(request):
@@ -232,6 +243,7 @@ def buyStock(request):
 
 
 # Handle the selling of stocks
+
 @login_required
 @transaction.atomic
 def sellStock(request):
@@ -289,6 +301,7 @@ def sellStock(request):
 
 
 # Handle the rules page view
+
 def rules(request):
 
     context = {}
@@ -297,9 +310,11 @@ def rules(request):
         playerObj = Player.objects.get(user=request.user)
         context['player'] = playerObj
 
-    return render(request, 'app/rules.html', context)
+    return render(request, 'core/rules.html', context)
+
 
 # Handle the engage page view
+
 @login_required
 def engage(request):
 
@@ -309,4 +324,4 @@ def engage(request):
         playerObj = Player.objects.get(user=request.user)
         context['player'] = playerObj
 
-    return render(request, 'app/engage.html', context)
+    return render(request, 'core/engage.html', context)
