@@ -2,7 +2,7 @@
 venv
 *.sqlite3
 festcms/media
-settings.py
+.env
 wsgi/static/
 __pycache__
 db.sqlite3-journal

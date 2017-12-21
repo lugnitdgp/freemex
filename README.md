@@ -42,16 +42,14 @@
 
     ```
 
-5. Copy the settings.py.example file in the freemex17 directory to settings.py
+5. Copy the .env.example file to .env file.
 
     ```
-    cd freemex17
-    cp settings.py.example settings.py
-    cd ..
+    cp .env.example .env
 
     ```
 
-6. Open the settings.py file and add an arbitary secret key.
+6. Open the .env file and add an arbitary secret key.
 
 7. Generate Google+ OAuth credentials with the following steps:
 
@@ -70,13 +68,7 @@
 
     + On the next screen, select the application type (web application in this case) and enter your authorized javascript origins and redirect uri. For now, just set the origin as http://localhost:8000 and the redirect URI as http://localhost:8000/complete/google-oauth2/
 
-    + Now, go to `settings.py` and add your OAuth credentials like this:
-
-    ```python
-    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = <client ID>
-    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = <client secret>
-
-    ```
+    + Now, open the `.env` file and add your Google OAuth credentials.
 
 8. Generate Facebook login credentials with the following steps:
 
@@ -92,13 +84,7 @@
 
     + Now go to **Settings/Basic** and then in the _App Domains_ just put `localhost` and hit **Save Changes**.
 
-    + Grab the App ID and App Secret and add them to `settings.py` likethis:
-
-    ```python
-    SOCIAL_AUTH_FACEBOOK_KEY = <app ID>
-    SOCIAL_AUTH_FACEBOOK_SECRET = <app secret>
-
-    ```
+    + Grab the App ID and App Secret and add them to the `.env` file.
 
 9.  Migrate your database and run the Django Development Server.
 
@@ -106,7 +92,7 @@
     ./manage.py makemigrations
     ./manage.py migrate
     ./manage.py runserver
-    
+
     ```
 
 10. Open `http://localhost:8000` in your browser. (Opening `http://127.0.0.1:8000` will cause problems with Social Login)

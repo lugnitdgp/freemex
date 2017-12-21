@@ -2,3 +2,4 @@ Django==1.11
 django-crontab==0.7.1
 Pillow==3.3.1
 social-auth-app-django==2.0.0
+python-decouple==3.1
