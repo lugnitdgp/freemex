@@ -3,6 +3,7 @@
 {% load tz %}
 
 {% block content %}
+
 {% include "core/includes/navbar.html" with current="Market" %}
 
 <!--Main layout-->
@@ -75,5 +76,12 @@
 
 </div>
 <!--/Main layout-->
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript" src="{% static "js/portfolio.js" %}"></script>
+<script type="text/javascript" src="{% static "js/market.js" %}"></script>
 
 {% endblock %}

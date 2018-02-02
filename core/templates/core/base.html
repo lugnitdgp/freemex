@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Freemex | Mukti 2017</title>
+    <title>Freemex | The online stock trading game</title>
     <link rel="icon" type="image/png" href="{% static "img/favicon.png" %}">
 
 
@@ -75,7 +75,7 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
 
-    <script type="text/javascript" src="{% static "js/main.js" %}"></script>
+    {% block javascript %}{% endblock %}
 
     <!-- Analytics -->
     <script>
