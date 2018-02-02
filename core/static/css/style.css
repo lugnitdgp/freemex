@@ -346,14 +346,16 @@ body {
     margin-top: 50px;
 }
 
-.ungineering-footer {
+.footer {
     text-align: center;
     font-size: 1.5em;
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
-.ungineering-footer img {
+.footer img {
+    margin-left: 0.5em;
+    max-height: 5em;
     max-width: 80%;
 }
 
@@ -401,5 +403,11 @@ body {
     .landing-page header.landing .content img.freemex-logo {
         padding-right: 10%;
         padding-left: 10%;
+    }
+
+    .footer img {
+        display: block;
+        margin: 0 auto;
+        margin-top: 0.5em;
     }
 }
