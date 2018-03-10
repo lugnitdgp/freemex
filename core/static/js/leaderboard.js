@@ -11,3 +11,9 @@ function leaderboardSearch() {
         }
     });
 }
+
+$(window).on("load", function() {
+    setTimeout(function() {
+        location.reload();
+    }, 60*1000);
+});
