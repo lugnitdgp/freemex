@@ -2,6 +2,7 @@ import requests
 
 from django.db import transaction
 from django.conf import settings
+from django.utils import timezone
 
 from .models import *
 
@@ -37,6 +38,7 @@ def update_all_stock_prices():
         # print("price=", quotes[stock.code]['latestPrice'], "change=", quotes[stock.code]['change'])
         stock.price = quotes[stock.code]['latestPrice']
         stock.diff = quotes[stock.code]['change']
+        stock.last_updated = timezone.now()
         stock.save()
 
 

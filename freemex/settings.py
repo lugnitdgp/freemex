@@ -28,7 +28,6 @@ EVENT_ENDED = config('EVENT_ENDED', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -109,13 +108,13 @@ else:
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Calcutta'
-
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+TIME_ZONE = 'Asia/Calcutta'
 
 
 # Static files (CSS, JavaScript, Images)

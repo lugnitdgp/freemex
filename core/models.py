@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-
+from django.utils import timezone
 
 # Create your models here.
 
@@ -29,7 +29,12 @@ class Stock(models.Model):
                                 decimal_places=2)
     diff = models.DecimalField(max_digits=19,
                                decimal_places=2)
-    last_updated = models.DateTimeField(auto_now=True)
+    last_updated = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        self.last_updated = timezone.now()
+        return super(Stock, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.code)

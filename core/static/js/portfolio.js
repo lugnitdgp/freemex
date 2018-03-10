@@ -33,10 +33,10 @@ function updateStockPrices() {
                 $(this).find('#price').html(price);
             });
             var last_updated = new Date(data['last_updated']);
-            var now = new Date(Date.now());
-            time = now - last_updated;
+            var now_time = new Date(Date.now());
+            time = now_time - last_updated;
             var options = {"month": "short", "day": "2-digit", "year": "numeric", "hour": "2-digit", "minute": "2-digit"};
-            var current_time = now.toLocaleDateString("en-US", options);
+            var current_time = now_time.toLocaleDateString("en-US", options);
             current_time = current_time.slice(0,3) + "." + current_time.slice(3);
             current_time = current_time.replace("PM", "p.m.");
             current_time = current_time.replace("AM", "a.m.");

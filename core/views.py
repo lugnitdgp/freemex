@@ -171,10 +171,12 @@ def market(request):
     context = {}
 
     all_stocks = Stock.objects.all()
+    player = Player.objects.get(user=request.user)
 
     context['all_stocks'] = all_stocks
-    for stock in all_stocks:
-        context['last_updated'] = stock.last_updated
+    context['player'] = player
+    context['last_updated'] = all_stocks.last().last_updated
+    
     return render(request, 'core/market.html', context)
 
 
