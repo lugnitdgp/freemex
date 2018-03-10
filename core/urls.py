@@ -1,48 +1,65 @@
 from django.conf.urls import include, url
 from django.contrib.auth.views import login, logout
+from django.conf import settings
 
 from . import views
 
-urlpatterns = [
-    # Home Page
-    url(r'^$', views.index, name='index'),
+# If the event has ended disable other pages and only show leaderboard with a
+# message saying event has ended
+if settings.EVENT_ENDED:
+    urlpatterns = [
+        # Handle end event view
+        url(r'^$', views.index, name='index-after-event'),
+    ]
+elif not settings.EVENT_STARTED:
+    urlpatterns = [
+        # Handle end event view
+        url(r'^$', views.index, name='index-before-event'),
 
-    # New user registration
-    url(r'^register/$', views.registerUser, name='register'),
+        # Stock price JSON data
+        url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
+    ]
+else:
+    urlpatterns = [
+        # Home Page
+        url(r'^$', views.index, name='index'),
 
-    # User login
-    url(r'^login/$', views.loginUser, name='login'),
+        # New user registration
+        url(r'^register/$', views.registerUser, name='register'),
 
-    # Username JSON data
-    url(r'get_users/$', views.getUsers, name='get_users'),
+        # User login
+        url(r'^login/$', views.loginUser, name='login'),
 
-    # Change username
-    url(r'^change_username/$', views.changeUsername, name='change_username'),
+        # Username JSON data
+        url(r'get_users/$', views.getUsers, name='get_users'),
 
-    # Stock price JSON data
-    url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
+        # Change username
+        url(r'^change_username/$', views.changeUsername, name='change_username'),
 
-    # Market watch
-    url(r'^market/$', views.market, name='market'),
+        # Stock price JSON data
+        url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
 
-    # Leaderboard
-    url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
+        # Market watch
+        url(r'^market/$', views.market, name='market'),
 
-    # Buy stock
-    url(r'^buystock/$', views.buyStock, name='buyStock'),
+        # Leaderboard
+        url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
 
-    # Sell stock
-    url(r'^sellstock/$', views.sellStock, name='sellStock'),
+        # Buy stock
+        url(r'^buystock/$', views.buyStock, name='buyStock'),
 
-    # Rules
-    url(r'^rules/$', views.rules, name='rules'),
+        # Sell stock
+        url(r'^sellstock/$', views.sellStock, name='sellStock'),
 
-    # Engage
-    url(r'^engage/$', views.engage, name='engage'),
+        # Rules
+        url(r'^rules/$', views.rules, name='rules'),
 
-    # social login urls
-    url('', include('social_django.urls', namespace='social')),
+        # Engage
+        url(r'^engage/$', views.engage, name='engage'),
 
-    # Logout url
-    url(r'^logout/$', logout, {'next_page': '/'}),
-]
+        # social login urls
+        url('', include('social_django.urls', namespace='social')),
+
+        # Logout url
+        url(r'^logout/$', logout, {'next_page': '/'}),
+    ]

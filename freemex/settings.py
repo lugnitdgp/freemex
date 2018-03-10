@@ -22,6 +22,10 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# Custom variable to handle start and end of events
+EVENT_STARTED = config('EVENT_STARTED', cast=bool)
+EVENT_ENDED = config('EVENT_ENDED', cast=bool)
+
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
@@ -209,4 +213,5 @@ CACHES = {
 
 SETTINGS_EXPORT = [
     'SOCIAL_AUTH_FACEBOOK_KEY',
+    'EVENT_STARTED',
 ]

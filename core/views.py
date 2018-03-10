@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.decorators.cache import cache_page
+from django.conf import settings
 
 from .models import *
 from .forms import RegistrationForm
@@ -20,7 +21,22 @@ def index(request):
 
     context = {}
 
-    if request.user.is_authenticated():
+    if settings.EVENT_ENDED:
+
+        players = map(lambda x: x.player, User.objects.filter(is_staff=False))
+        players = sorted(players, key=lambda a: a.total_value(), reverse=True)
+
+        context['message'] = {
+            'first': "The event has ended... Thanks for participating. ",
+            'second': "Congralutions to the winners and here is the leaderboard..."
+        }
+        context['players'] = players
+
+        return render(request, 'core/leaderboard.html', context)
+
+
+    if settings.EVENT_STARTED and request.user.is_authenticated():
+
         playerObj = Player.objects.get(user=request.user)
         playerStocks = PlayerStock.objects.filter(player=playerObj)
 

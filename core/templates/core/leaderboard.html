@@ -2,12 +2,22 @@
 {% load staticfiles %}
 
 {% block content %}
-{% include "core/includes/navbar.html" %}
+{% if not message %}
+  {% include "core/includes/navbar.html" %}
+{% endif %}
 
 <!--Main layout-->
 <div class="container leaderboard">
     <br>
-    <h1>Leaderboard</h1>
+    {% if message %}
+      <h2 class="text-center">{{message.first}}</h1>
+      <h3 class="text-center">{{message.second}}</h2>
+      <br>
+      <hr>
+      <h1 class="text-center">Leaderboard</h1>
+    {% else %}
+      <h1>Leaderboard</h1>
+    {% endif %}
     <hr>
     <br>
 
