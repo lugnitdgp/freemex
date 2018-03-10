@@ -75,10 +75,12 @@
                 {% endif %}
                 <p class="card-text stock-info">Price: <span id="price"></span></p>
                 <p class="card-text stock-info">{{ player_stock.stock.code }}</p>
+                <p class="card-text stock-info">x{{ player_stock.quantity }}</p>
+                <div class="market-buttons">
+                  <a href="#" class="btn btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}" data-price="{{ player_stock.stock.price }}">Buy More</a>
+                  <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#sellModal{{ player_stock.stock.code }}">sell</a>
+                </div>
             </div>
-            <p class="card-text">Quantity: {{ player_stock.quantity }}</p>
-            <a href="#" class="btn btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}" data-price="{{ player_stock.stock.price }}">Buy More</a>
-            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#sellModal{{ player_stock.stock.code }}">sell</a>
         </div>
     </div>
 

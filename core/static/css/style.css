@@ -323,6 +323,11 @@ body {
     text-align: right;
 }
 
+.portfolio .card .market-info .market-buttons,
+.market .card .market-info .market-buttons {
+    margin-top: 2em;
+}
+
 .portfolio .card .market-info .up,
 .market .card .market-info .up {
     color: green;
@@ -400,9 +405,40 @@ body {
 
 @media only screen and (max-width: 768px) {
 
+  .btn {
+    padding: 0.85rem 1.5rem;
+  }
+
     .landing-page header.landing .content img.freemex-logo {
         padding-right: 10%;
         padding-left: 10%;
+    }
+
+    .landing-page .registration-form input:not([type="submit"]):focus ~ .input-requirements,
+    .landing-page .registration-form input:not([type="submit"]):active ~ .input-requirements {
+        max-height: 150px;
+    }
+
+    .portfolio .card .card-title, .portfolio .card .market-info .market-buttons,
+    .market .card .card-title, .market .card .market-info .market-buttons {
+        text-align: center;
+    }
+
+    .portfolio .card .market-info,
+    .market .card .market-info {
+        padding: 1em 0;
+    }
+
+    .market .card .market-info .stock-info:nth-child(2),
+    .market .card .market-info .stock-info:nth-child(3) {
+        float: left;
+    }
+
+    .portfolio .card .market-info .stock-info,
+    .market .card .market-info .stock-info {
+        font-size: 0.85rem;
+        text-align: center;
+        padding: 0 0.35em;
     }
 
     .footer img {

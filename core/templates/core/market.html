@@ -34,7 +34,7 @@
                     <i class="fa fa-arrow-down" aria-hidden="true"></i>
                 </p>
                 {% endif %}
-                <p class="card-text stock-info">Price: <span id="price"></span></p>
+                <p class="card-text stock-info"><strong>$</strong> <span id="price"></span></p>
                 <p class="card-text stock-info">{{ stock.code }}</p>
                 <div class="market-buttons">
                     <a href="#" class="btn btn-primary btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ stock.code }}" data-price="{{ stock.price }}">Buy</a>
