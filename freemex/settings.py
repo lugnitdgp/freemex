@@ -70,6 +70,8 @@ TEMPLATES = [
 
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+
+                'django_settings_export.settings_export',
             ],
         },
     },
@@ -204,3 +206,7 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     }
 }
+
+SETTINGS_EXPORT = [
+    'SOCIAL_AUTH_FACEBOOK_KEY',
+]
