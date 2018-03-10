@@ -154,10 +154,8 @@ def stockPrices(request):
 def market(request):
     context = {}
 
-    playerObj = Player.objects.get(user=request.user)
     all_stocks = Stock.objects.all()
 
-    context['player'] = playerObj
     context['all_stocks'] = all_stocks
     for stock in all_stocks:
         context['last_updated'] = stock.last_updated
@@ -166,15 +164,14 @@ def market(request):
 
 # Handle the leaderboard page view
 
-@cache_page(60 * 2)
+@login_required
+@cache_page(60 * 1)
 def leaderboard(request):
     context = {}
 
-    playerObj = Player.objects.get(user=request.user)
     players = map(lambda x: x.player, User.objects.filter(is_staff=False))
     players = sorted(players, key=lambda a: a.total_value(), reverse=True)
 
-    context['player'] = playerObj
     context['players'] = players
     return render(request, 'core/leaderboard.html', context)
 
@@ -302,13 +299,10 @@ def sellStock(request):
 
 # Handle the rules page view
 
+@login_required
 def rules(request):
 
     context = {}
-
-    if request.user.is_authenticated():
-        playerObj = Player.objects.get(user=request.user)
-        context['player'] = playerObj
 
     return render(request, 'core/rules.html', context)
 
@@ -319,9 +313,5 @@ def rules(request):
 def engage(request):
 
     context = {}
-
-    if request.user.is_authenticated():
-        playerObj = Player.objects.get(user=request.user)
-        context['player'] = playerObj
 
     return render(request, 'core/engage.html', context)
