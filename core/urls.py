@@ -10,6 +10,9 @@ if settings.EVENT_ENDED:
     urlpatterns = [
         # Handle end event view
         url(r'^$', views.index, name='index-after-event'),
+        
+        # Leaderboard api
+        url(r'^api/leaderboard/$', views.leaderboardApi, name='leaderboardApi'),
     ]
 elif not settings.EVENT_STARTED:
     urlpatterns = [
@@ -44,6 +47,9 @@ else:
 
         # Leaderboard
         url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
+
+        # Leaderboard api
+        url(r'^api/leaderboard/$', views.leaderboardApi, name='leaderboardApi'),
 
         # Buy stock
         url(r'^buystock/$', views.buyStock, name='buyStock'),

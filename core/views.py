@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -176,7 +176,7 @@ def market(request):
     context['all_stocks'] = all_stocks
     context['player'] = player
     context['last_updated'] = all_stocks.last().last_updated
-    
+
     return render(request, 'core/market.html', context)
 
 
@@ -192,6 +192,23 @@ def leaderboard(request):
 
     context['players'] = players
     return render(request, 'core/leaderboard.html', context)
+
+# Get leaderboard data
+
+def leaderboardApi(request):
+    response_data = []
+    if request.method == "GET":
+        players = User.objects.filter(is_staff=False)
+        players = sorted(players, key=lambda a: a.player.total_value(), reverse=True)
+
+        for player in players:
+            response_data.append({
+                                "name": player.username,
+                                "value": player.player.total_value(),
+                                "email": player.email
+                                })
+
+    return JsonResponse(response_data, safe=False)
 
 
 # Handle the buying of stocks
