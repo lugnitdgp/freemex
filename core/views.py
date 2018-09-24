@@ -198,11 +198,11 @@ def leaderboard(request):
 def leaderboardApi(request):
     response_data = []
     if request.method == "GET":
-        players = map(lambda x: x.player, User.objects.filter(is_staff=False))
-        players = sorted(players, key=lambda a: a.total_value(), reverse=True)
+        players = User.objects.filter(is_staff=False)
+        players = sorted(players, key=lambda a: a.player.total_value(), reverse=True)
 
         for player in players:
-            response_data.append({ "name": str(player.user),"value": str(player.total_value())})
+            response_data.append({ "name": str(player.username),"value": str(player.player.total_value()),"email": str(player.email)})
 
     return JsonResponse(response_data, safe=False)
 
