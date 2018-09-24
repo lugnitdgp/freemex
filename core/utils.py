@@ -1,10 +1,9 @@
 import requests
 
 from django.db import transaction
-from django.conf import settings
 from django.utils import timezone
 
-from .models import *
+from .models import Stock, Player, PlayerStock
 
 
 def fetch_quotes(symbols):
@@ -12,7 +11,7 @@ def fetch_quotes(symbols):
 
     quotes = {}
     query_string = ','.join(symbols)
-    link = "https://api.iextrading.com/1.0/stock/market/batch?symbols={}&types=quote".format(query_string)
+    link = "https://api.iextrading.com/1.0/stock/market/batch?symbols={}&types=quote".format(query_string)  # noqa
     # print(link)
 
     try:
@@ -35,7 +34,6 @@ def update_all_stock_prices():
     symbol_list = [s.code for s in all_stocks]
     quotes = fetch_quotes(symbol_list)
     for stock in all_stocks:
-        # print("price=", quotes[stock.code]['latestPrice'], "change=", quotes[stock.code]['change'])
         stock.price = quotes[stock.code]['latestPrice']
         stock.diff = quotes[stock.code]['change']
         stock.last_updated = timezone.now()
@@ -49,7 +47,7 @@ def update_all_player_assets():
         playerObj = Player.objects.select_for_update().filter(
             user=player.user)[0]
         playerObj.value_in_stocks = 0
-        for j in PlayerStock.objects.select_for_update().filter(player=playerObj):
+        for j in PlayerStock.objects.select_for_update().filter(player=playerObj):  # noqa
             playerObj.value_in_stocks += j.stock.price * j.quantity
         playerObj.save()
         print("updated ", playerObj)

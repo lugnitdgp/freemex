@@ -1,14 +1,15 @@
 import json
 
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 
-from .models import *
+from .models import Player, Stock, PlayerStock
 from .forms import RegistrationForm
 
 
@@ -28,15 +29,13 @@ def index(request):
 
         context['message'] = {
             'first': "The event has ended... Thanks for participating. ",
-            'second': "Congralutions to the winners and here is the leaderboard..."
+            'second': "Congralutions to the winners and here is the leaderboard..."  # noqa
         }
         context['players'] = players
 
         return render(request, 'core/leaderboard.html', context)
 
-
     if settings.EVENT_STARTED and request.user.is_authenticated():
-
         playerObj = Player.objects.get(user=request.user)
         playerStocks = PlayerStock.objects.filter(player=playerObj)
 
@@ -62,7 +61,10 @@ def registerUser(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            login(
+                request, user,
+                backend='django.contrib.auth.backends.ModelBackend'
+            )
 
             response_data['code'] = 0
             response_data['message'] = 'User signed up succesfully'
@@ -129,8 +131,8 @@ def changeUsername(request):
     if request.method == "POST":
 
         try:
-            old_username = str(request.POST['current_username']);
-            new_username = str(request.POST['username']);
+            old_username = str(request.POST['current_username'])
+            new_username = str(request.POST['username'])
         except:
             response_data['message'] = 'Error in form data'
             return HttpResponse(json.dumps(response_data),
@@ -156,7 +158,11 @@ def stockPrices(request):
     if request.method == "GET":
         stockObjects = Stock.objects.all()
         for stock in stockObjects:
-            response_data[stock.name] = {"stock": stock.code, "price": str(stock.price), "diff": str(stock.diff)}
+            response_data[stock.name] = {
+                "stock": stock.code,
+                "price": str(stock.price),
+                "diff": str(stock.diff)
+            }
 
         response_data['last_updated'] = stock.last_updated.isoformat()
 
@@ -195,18 +201,21 @@ def leaderboard(request):
 
 # Get leaderboard data
 
+
 def leaderboardApi(request):
     response_data = []
     if request.method == "GET":
         players = User.objects.filter(is_staff=False)
-        players = sorted(players, key=lambda a: a.player.total_value(), reverse=True)
+        players = sorted(
+            players, key=lambda a: a.player.total_value(), reverse=True
+        )
 
         for player in players:
             response_data.append({
-                                "name": player.username,
-                                "value": player.player.total_value(),
-                                "email": player.email
-                                })
+                "name": player.username,
+                "value": player.player.total_value(),
+                "email": player.email
+            })
 
     return JsonResponse(response_data, safe=False)
 
@@ -231,7 +240,9 @@ def buyStock(request):
                                 content_type="application/json")
 
         stockObj = Stock.objects.get(code=requestedStockCode)
-        playerObj = Player.objects.select_for_update().filter(user=request.user)[0]
+        playerObj = Player.objects.select_for_update().filter(
+            user=request.user
+        )[0]
         availableMoney = playerObj.cash
         stockPrice = stockObj.price
         if(availableMoney > (stockPrice * requestedStockCount) and
@@ -239,11 +250,12 @@ def buyStock(request):
             try:
 
                 # Update player to stock table
-                playerStockList = PlayerStock.objects.select_for_update().filter(
+                playerStockList = PlayerStock.objects.select_for_update().filter(  # noqa
                     player=playerObj, stock=stockObj)
                 if(playerStockList.count()):
                     playerStock = playerStockList[0]
-                    playerStock.quantity = playerStock.quantity + requestedStockCount
+                    playerStock.quantity = playerStock.quantity + \
+                        requestedStockCount
                     playerStock.save()
                 else:
                     playerStock = PlayerStock()
@@ -294,7 +306,9 @@ def sellStock(request):
                                 content_type="application/json")
 
         stockObj = Stock.objects.get(code=requestedStockCode)
-        playerObj = Player.objects.select_for_update().filter(user=request.user)[0]
+        playerObj = Player.objects.select_for_update().filter(
+            user=request.user
+        )[0]
         availableMoney = playerObj.cash
         stockPrice = stockObj.price
 
@@ -307,7 +321,8 @@ def sellStock(request):
 
                 # Update player to stock table
                 playerStock = playerStockList[0]
-                playerStock.quantity = playerStock.quantity - requestedStockCount
+                playerStock.quantity = playerStock.quantity - \
+                    requestedStockCount
                 playerStock.save()
 
                 # Add player money

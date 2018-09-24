@@ -6,6 +6,7 @@ from django.utils import timezone
 
 # Create your models here.
 
+
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     cash = models.DecimalField(max_digits=19,

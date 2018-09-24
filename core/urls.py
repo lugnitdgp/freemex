@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import logout
 from django.conf import settings
 
 from . import views
@@ -9,18 +9,20 @@ from . import views
 if settings.EVENT_ENDED:
     urlpatterns = [
         # Handle end event view
-        url(r'^$', views.index, name='index-after-event'),
-        
+        url(r'^$', views.index, name='index_after_event'),
+
         # Leaderboard api
-        url(r'^api/leaderboard/$', views.leaderboardApi, name='leaderboardApi'),
+        url(
+            r'^api/leaderboard/$', views.leaderboardApi, name='leaderboard_api'
+        ),
     ]
 elif not settings.EVENT_STARTED:
     urlpatterns = [
         # Handle end event view
-        url(r'^$', views.index, name='index-before-event'),
+        url(r'^$', views.index, name='index_before_event'),
 
         # Stock price JSON data
-        url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
+        url(r'view/stockprice/$', views.stockPrices, name='stock_price'),
     ]
 else:
     urlpatterns = [
@@ -37,10 +39,12 @@ else:
         url(r'get_users/$', views.getUsers, name='get_users'),
 
         # Change username
-        url(r'^change_username/$', views.changeUsername, name='change_username'),
+        url(
+            r'^change_username/$', views.changeUsername, name='change_username'
+        ),
 
         # Stock price JSON data
-        url(r'view/stockprice/$', views.stockPrices, name='stockPrice'),
+        url(r'view/stockprice/$', views.stockPrices, name='stock_price'),
 
         # Market watch
         url(r'^market/$', views.market, name='market'),
@@ -49,13 +53,15 @@ else:
         url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
 
         # Leaderboard api
-        url(r'^api/leaderboard/$', views.leaderboardApi, name='leaderboardApi'),
+        url(
+            r'^api/leaderboard/$', views.leaderboardApi, name='leaderboard_api'
+        ),
 
         # Buy stock
-        url(r'^buystock/$', views.buyStock, name='buyStock'),
+        url(r'^buystock/$', views.buyStock, name='buy_stock'),
 
         # Sell stock
-        url(r'^sellstock/$', views.sellStock, name='sellStock'),
+        url(r'^sellstock/$', views.sellStock, name='sell_stock'),
 
         # Rules
         url(r'^rules/$', views.rules, name='rules'),
