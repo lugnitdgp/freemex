@@ -202,7 +202,11 @@ def leaderboardApi(request):
         players = sorted(players, key=lambda a: a.player.total_value(), reverse=True)
 
         for player in players:
-            response_data.append({ "name": str(player.username),"value": str(player.player.total_value()),"email": str(player.email)})
+            response_data.append({
+                                "name": player.username,
+                                "value": player.player.total_value(),
+                                "email": player.email
+                                })
 
     return JsonResponse(response_data, safe=False)
 
