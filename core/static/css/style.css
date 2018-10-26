@@ -58,7 +58,7 @@ body {
     width: 100%;
     height: 100vh;
 
-    background-image: url('../img/bg2.jpg');
+    background-image: url('../img/bg.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -69,7 +69,7 @@ body {
 
 .landing-page header.landing .glug-logo {
     position: absolute;
-    left: 2em;
+    left: 11em;
     top: 1em;
     z-index: 999;
 }
@@ -81,6 +81,27 @@ body {
             filter: drop-shadow(1px 1px 2px #000);
 }
 
+.landing-page header.landing .fest-logo {
+    position: absolute;
+    left: 1em;
+    top: 0.2em;
+    z-index: 999;
+}
+
+.landing-page header.landing .fest-logo img {
+    width: 9.25em;
+    max-width: 30vw;
+    -webkit-filter: drop-shadow(1px 1px 2px #000);
+            filter: drop-shadow(1px 1px 2px #000);
+}
+
+@media only screen and (max-width: 768px) {
+  .landing-page header.landing .glug-logo {
+    left: auto;
+    right: 2em;
+  }
+}
+
 .landing-page header.landing .sponsor-logo {
     position: absolute;
     top: 0;
@@ -88,16 +109,6 @@ body {
     max-width: 40vw;
     width: 250px;
     padding: 1%;
-}
-
-.landing-page header.landing .sponsor-logo .ungineering-logo {
-    width: 100%;
-    padding: 2%;
-}
-
-.landing-page header.landing .sponsor-logo .citygym-logo {
-    padding: 2%;
-    width: 100%;
 }
 
 .landing-page header.landing .content {

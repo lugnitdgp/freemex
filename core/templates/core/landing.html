@@ -9,8 +9,13 @@
     <header class="landing">
         <div class="landing-bg"></div>
         <div class="glug-logo">
-            <a href="http://freemex.nitdgplug,org">
+            <a href="https://freemex.nitdgplug.org">
                 <img src="{% static "img/glug_logo_transparent.png" %}">
+            </a>
+        </div>
+        <div class="fest-logo">
+            <a href="https://avskr.in">
+                <img src="{% static "img/aavishkar-logo.png" %}">
             </a>
         </div>
         <div class="sponsor-logo">
@@ -21,7 +26,7 @@
             <p class="nasdaq-intro">NASDAQ Timings: 8PM - 2:30AM IST</p>
             {% if settings.EVENT_STARTED %}
               <div class="login-buttons">
-                  <p><a class="btn cyan darken-2" href="#" data-toggle="modal" data-target="#modalLRForm" role="button"><i class="fa fa-sign-in"></i> Login/Register</a></p>
+                  <!-- <p><a class="btn cyan darken-2" href="#" data-toggle="modal" data-target="#modalLRForm" role="button"><i class="fa fa-sign-in"></i> Login/Register</a></p> -->
                   <a class="btn btn-fb" href="{% url 'social:begin' 'facebook' %}" role="button">
                       <i class="fa fa-facebook left"></i> Facebook
                   </a>
