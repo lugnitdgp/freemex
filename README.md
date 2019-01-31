@@ -1,3 +1,5 @@
+[![GSoC Heat](https://img.shields.io/badge/GSoC%20Heat-2019-orange.svg)](https://nitdgpos.github.io/gsoc_heat)
+
 # Freemex
 
 **Freemex** is an online trading game which allows you to buy and sell stocks at your convenience and at the current market price. The player at the end with highest total stocks and cash wins the game.
