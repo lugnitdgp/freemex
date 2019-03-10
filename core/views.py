@@ -274,6 +274,15 @@ def buyStock(request):
                 for j in PlayerStock.objects.filter(player=playerObj):
                     playerObj.value_in_stocks += j.stock.price * j.quantity
                 playerObj.save()
+
+                # add transaction to log
+                log = Log()
+                log.player = playerObj
+                log.stock = stockObj
+                log.quantity = requestedStockCount
+                log.bought_at = stockPrice
+                log.save()
+                
                 response_data['code'] = 0
                 response_data['message'] = 'Transaction Successful'
             except:
@@ -335,6 +344,15 @@ def sellStock(request):
                 for j in PlayerStock.objects.filter(player=playerObj):
                     playerObj.value_in_stocks += j.stock.price * j.quantity
                 playerObj.save()
+                
+                # add transaction to log
+                log = Log()
+                log.player = playerObj
+                log.stock = stockObj
+                log.quantity = requestedStockCount
+                log.bought_at = stockPrice
+                log.save()
+                
                 response_data['code'] = 0
                 response_data['message'] = 'Transaction Successful'
             except:
