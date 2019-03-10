@@ -383,3 +383,20 @@ def engage(request):
     context = {}
 
     return render(request, 'core/engage.html', context)
+
+# handle the balance page view
+
+def balance(request):
+
+    context = {}
+    
+    playerObj = Player.objects.get(user=request.user)
+    logs = Log.objects.filter(player=playerObj)
+    logs = sorted(logs, key=lambda a: a.bought_on, reverse=True)
+
+    context['player'] = playerObj
+    context['logs'] = log
+
+
+    return render(request, 'core/balance.html', context)
+

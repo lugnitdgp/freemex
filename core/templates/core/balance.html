@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+{% load staticfiles %}
+{% load tz %}
+
+{% block content %}
+
+{% include "core/includes/navbar.html" with current="Balance" %}
+
+<!--Main layout-->
+<div class="container market">
+    <br>
+    <h1>Market</h1>
+    <hr>
+    <h5>Cash in your hand: $<span id="playercash">{{ player.cash }}</span></h5>
+    <br>
+    <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
+    <br><br>
+    
+    {% for log in logs %}
+
+    <!--Card-->
+    <div class="card stock-card" data-name="{{ log.stock.name }}">
+        <div class="card-body">
+            <h4 class="card-title">{{ logstock.name }}</h4>
+            <div class="market-info">
+                <p class="card-text stock-info"><strong>$</strong> <span id="price"></span></p>
+                <p class="card-text stock-info">{{ log.stock.code }}</p>
+                <p class="card-text stock-info">x{{ log.quantity }}</p>
+                <p class="card-text stock-info">bought at : {{ log.bought_at }}</p>
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+
+</div>
+<!--/Main layout-->
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript" src="{% static "js/portfolio.js" %}"></script>
+<script type="text/javascript" src="{% static "js/market.js" %}"></script>
+
+{% endblock %}
