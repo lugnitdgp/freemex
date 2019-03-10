@@ -57,6 +57,11 @@ class Log(models.Model):
                                 decimal_places=2)
     bought_on = models.DateTimeField()
 
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        self.bought_on = timezone.now()
+        return super(Stock, self).save(*args, **kwargs)
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
