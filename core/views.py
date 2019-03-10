@@ -9,7 +9,7 @@ from django.db import transaction
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 
-from .models import Player, Stock, PlayerStock
+from .models import Player, Stock, PlayerStock , Log
 from .forms import RegistrationForm
 
 
@@ -256,12 +256,14 @@ def buyStock(request):
                     playerStock = playerStockList[0]
                     playerStock.quantity = playerStock.quantity + \
                         requestedStockCount
+                    playerStock.invested += stockPrice * requestedStockCount
                     playerStock.save()
                 else:
                     playerStock = PlayerStock()
                     playerStock.player = playerObj
                     playerStock.stock = stockObj
                     playerStock.quantity = requestedStockCount
+                    playerStock.invested += stockPrice * requestedStockCount
                     playerStock.save()
 
                 # Deduct player cash
@@ -280,7 +282,8 @@ def buyStock(request):
                 log.player = playerObj
                 log.stock = stockObj
                 log.quantity = requestedStockCount
-                log.bought_at = stockPrice
+                log.price = stockPrice
+                log.isBought = True
                 log.save()
                 
                 response_data['code'] = 0
@@ -332,6 +335,9 @@ def sellStock(request):
                 playerStock = playerStockList[0]
                 playerStock.quantity = playerStock.quantity - \
                     requestedStockCount
+                playerStock.invested -= stockPrice * requestedStockCount
+                if playerStock.quantity == 0:
+                    playerStock.invested = 0
                 playerStock.save()
 
                 # Add player money
@@ -350,7 +356,8 @@ def sellStock(request):
                 log.player = playerObj
                 log.stock = stockObj
                 log.quantity = requestedStockCount
-                log.bought_at = stockPrice
+                log.price = stockPrice
+                log.isBought = False
                 log.save()
                 
                 response_data['code'] = 0
@@ -392,10 +399,10 @@ def balance(request):
     
     playerObj = Player.objects.get(user=request.user)
     logs = Log.objects.filter(player=playerObj)
-    logs = sorted(logs, key=lambda a: a.bought_on, reverse=True)
+    logs = sorted(logs, key=lambda a: a.logtime, reverse=True)
 
     context['player'] = playerObj
-    context['logs'] = log
+    context['logs'] = logs
 
 
     return render(request, 'core/balance.html', context)
