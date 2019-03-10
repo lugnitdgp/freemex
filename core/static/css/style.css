@@ -321,7 +321,7 @@ body {
     font-weight: 300;
 }
 
-.portfolio .card .market-info .card-text,
+.portfolio .card.market-info .card-text,
 .market .card .market-info .card-text {
     font-weight: 400;
 }

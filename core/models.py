@@ -59,6 +59,8 @@ class Log(models.Model):
     price = models.DecimalField(max_digits=19,
                                 decimal_places=2)
     logtime = models.DateTimeField()
+    change = models.DecimalField(max_digits=19,
+                                decimal_places=2,default=0)
 
     def save(self, *args, **kwargs):
         ''' On save, update timestamps '''

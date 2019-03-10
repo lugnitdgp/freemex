@@ -284,6 +284,7 @@ def buyStock(request):
                 log.quantity = requestedStockCount
                 log.price = stockPrice
                 log.isBought = True
+                log.change = 0
                 log.save()
                 
                 response_data['code'] = 0
@@ -358,6 +359,7 @@ def sellStock(request):
                 log.quantity = requestedStockCount
                 log.price = stockPrice
                 log.isBought = False
+                log.change = (stockPrice - ((playerStock.invested+stockPrice * requestedStockCount)/playerStock.quantity)) * requestedStockCount
                 log.save()
                 
                 response_data['code'] = 0
