@@ -49,6 +49,13 @@ class PlayerStock(models.Model):
     def __str__(self):
         return str(str(self.player) + " - " + self.stock.code)
 
+class Log(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    bought_at = models.DecimalField(max_digits=19,
+                                decimal_places=2)
+    bought_on = models.DateTimeField()
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
