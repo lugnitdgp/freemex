@@ -7,7 +7,7 @@
 {% include "core/includes/navbar.html" with current="Balance" %}
 
 <!--Main layout-->
-<div class="container market">
+<div class="container balance">
     <br>
     <h1>Balance</h1>
     <hr>
@@ -16,36 +16,48 @@
     <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
     <br><br>
     
-    {% for log in logs %}
+    <table class="table balance-sheet" >
+    	<thead>
+    		<tr>
+    			<th scope="col"> Stock name</th>
+    			<th scope="col"> Status</th>
+    			<th scope="col"> Qty.</th>
+    			<th scope="col"> Stock code</th>
+    			<th scope="col"> Price</th>
+    			<th scope="col"> Gain/loss</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    	{% for log in logs %}
+    	<tr class="stock-card" data-name="{{ log.stock.name }}">
+	            <td>{{ log.stock.name }}</td>
+	            <td>
+		            {% if log.isBought  %}
+		                	<font class = "text-success" >BOUGHT</font>
+		            {% else %}
+		                	<font class = "text-danger">SOLD</font>
+		            {% endif %}
+		        </td>
+	            <td>{{ log.quantity }}</td>
+	            <td>{{ log.stock.code }}</td>
+	            <td><strong>$</strong>{{ log.price }}</td>
+	            <td>
+	            	{% if log.change >= 0 %}
+	          	      <font class="text-success">${{ log.change }}</font>
+	                {% elif log.change < 0 %}
+	                  <font class="text-danger">${{ log.change }}</font>
+	                {% endif %}
+	            </td>
+		</tr>
+		{% endfor %}
+    	</tbody>
+    </table>
 
-    <!--Card-->
-    <div class="card stock-card" data-name="{{ log.stock.name }}">
-        <div class="card-body">
-            <h4 class="card-title">{{ log.stock.name }}</h4>
-            <div class="market-info">
-                <p class="card-text stock-info"><strong>at $</strong>{{ log.price }}</p>
-            	<p class="card-text stock-info">{{ log.stock.code }}</p>
-                <p class="card-text stock-info">x{{ log.quantity }}</p>
-                {% if log.change > 0 %}
-                <p class="card-text stock-info text-success">profit : ${{ log.change }}</p>
-                {% elif log.change < 0 %}
-                <p class="card-text stock-info text-danger">loss : ${{ log.change }}</p>
-                {% endif %}
-                {% if log.isBought  %}
-                	<button type="button" class="btn btn-success" >BOUGHT</button>
-                {% else %}
-                	<button type="button"  class="btn btn-danger">SOLD</button>
-                {% endif %}
-                <p class="card-text stock-info"></p>
-            </div>
-        </div>
-    </div>
 
-
-    {% endfor %}
+    
 
 </div>
-<!--/Main layout-->
+
 
 {% endblock %}
 

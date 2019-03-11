@@ -327,8 +327,9 @@ body {
 }
 
 .portfolio .card .market-info .stock-info,
-.market .card .market-info .stock-info {
-    display: block;
+.market .card .market-info .stock-info
+{
+	display: block;
     float: right;
     padding: 0 1em;
     text-align: right;
@@ -339,12 +340,12 @@ body {
     margin-top: 2em;
 }
 
-.portfolio .card-columns .market-info .up,
+.portfolio .card .market-info .up,
 .market .card .market-info .up {
     color: green;
 }
 
-.portfolio .card-columns .market-info .down,
+.portfolio .card .market-info .down,
 .market .card .market-info .down {
     color: red;
 }

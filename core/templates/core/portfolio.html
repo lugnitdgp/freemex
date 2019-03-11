@@ -60,7 +60,7 @@
 
     <!--Card-->
     {% if player_stock.quantity %}
-    <div class="card-columns stock-card " data-name="{{ player_stock.stock.name }}">
+    <div class="card stock-card " data-name="{{ player_stock.stock.name }}">
         <div class="card-body">
             <h4 class="card-title">{{ player_stock.stock.name }}</h4>
             <div class="market-info">
@@ -76,7 +76,7 @@
                 <p class="card-text stock-info">Price: <span id="price"></span></p>
                 <p class="card-text stock-info">{{ player_stock.stock.code }}</p>
                 <p class="card-text stock-info">x{{ player_stock.quantity }}</p>
-                <p class="card-text stock-info">invested : ${{ player_stock.invested }}</p>
+                <!--<p class="card-text stock-info">Invested : ${{ player_stock.invested }}</p>-->
                 <div class="market-buttons">
                   <a href="#" class="btn btn-success market-buy-button" data-toggle="modal" data-target="#buyModal{{ player_stock.stock.code }}" data-price="{{ player_stock.stock.price }}">Buy More</a>
                   <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#sellModal{{ player_stock.stock.code }}">sell</a>
