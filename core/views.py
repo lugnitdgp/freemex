@@ -332,18 +332,17 @@ def sellStock(request):
            requestedStockCount <= playerStockList[0].quantity):
             try:
 
+            	
+
                 # Update player to stock table
                 playerStock = playerStockList[0]
-                playerStock.quantity = playerStock.quantity - \
-                    requestedStockCount
-                playerStock.invested -= stockPrice * requestedStockCount
-                if playerStock.quantity == 0:
-                    playerStock.invested = 0
+                initial_investment = playerStock.invested # stores cost price before selling
+                playerStock.quantity = playerStock.quantity - requestedStockCount
+                playerStock.invested = stockPrice * playerStock.quantity
                 playerStock.save()
 
                 # Add player money
-                newAvailableMoney = availableMoney + \
-                    (stockPrice * requestedStockCount)
+                newAvailableMoney = availableMoney + (stockPrice * requestedStockCount)
                 playerObj.cash = newAvailableMoney
 
                 # Change player value in stock
@@ -359,7 +358,8 @@ def sellStock(request):
                 log.quantity = requestedStockCount
                 log.price = stockPrice
                 log.isBought = False
-                log.change = (stockPrice - ((playerStock.invested+stockPrice * requestedStockCount)/playerStock.quantity)) * requestedStockCount
+                log.change =   playerStock.invested  +            stockPrice * requestedStockCount  - initial_investment
+                # change   =   market value of remaining stocks + amount at which the stock is sold -cost of all stocks -
                 log.save()
                 
                 response_data['code'] = 0
