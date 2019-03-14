@@ -407,5 +407,5 @@ def transactions(request):
     context['logs'] = logs
 
 
-    return render(request, 'core transactions.html', context)
+    return render(request, 'core/transactions.html', context)
 
