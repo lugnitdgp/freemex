@@ -4,19 +4,19 @@
 
 {% block content %}
 
-{% include "core/includes/navbar.html" with current="Balance" %}
+{% include "core/includes/navbar.html" with current="Transactions" %}
 
 <!--Main layout-->
-<div class="container balance">
+<div class="container transactions">
     <br>
-    <h1>Balance</h1>
+    <h1>Transactions</h1>
     <hr>
     <h5>Cash in your hand: $<span id="playercash">{{ player.cash }}</span></h5>
     <br>
     <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
     <br><br>
     
-    <table class="table balance-sheet" >
+    <table class="table transactions-sheet" >
     	<thead>
     		<tr>
     			<th scope="col"> Stock name</th>

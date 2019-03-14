@@ -393,9 +393,9 @@ def engage(request):
 
     return render(request, 'core/engage.html', context)
 
-# handle the balance page view
+# handle the transactions page view
 
-def balance(request):
+def transactions(request):
 
     context = {}
     
@@ -407,5 +407,5 @@ def balance(request):
     context['logs'] = logs
 
 
-    return render(request, 'core/balance.html', context)
+    return render(request, 'core transactions.html', context)
 
