@@ -74,4 +74,7 @@ else:
 
         # Logout url
         url(r'^logout/$', logout, {'next_page': '/'}),
+
+        # transactions
+        url(r'^transactions/$', views.transactions, name='transactions'),
     ]

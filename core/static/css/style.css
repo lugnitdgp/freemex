@@ -327,8 +327,9 @@ body {
 }
 
 .portfolio .card .market-info .stock-info,
-.market .card .market-info .stock-info {
-    display: block;
+.market .card .market-info .stock-info
+{
+	display: block;
     float: right;
     padding: 0 1em;
     text-align: right;

@@ -1,0 +1,69 @@
+{% extends "core/base.html" %}
+{% load staticfiles %}
+{% load tz %}
+
+{% block content %}
+
+{% include "core/includes/navbar.html" with current="Transactions" %}
+
+<!--Main layout-->
+<div class="container transactions">
+    <br>
+    <h1>Transactions</h1>
+    <hr>
+    <h5>Cash in your hand: $<span id="playercash">{{ player.cash }}</span></h5>
+    <br>
+    <input type="text" id="market-search" onkeyup="marketSearch()" placeholder="Search for stock names..">
+    <br><br>
+    
+    <table class="table transactions-sheet" >
+    	<thead>
+    		<tr>
+    			<th scope="col"> Stock name</th>
+    			<th scope="col"> Status</th>
+    			<th scope="col"> Quantity</th>
+    			<th scope="col"> Stock code</th>
+    			<th scope="col"> Price</th>
+    			<th scope="col"> Gain/loss</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    	{% for log in logs %}
+    	<tr class="stock-card" data-name="{{ log.stock.name }}">
+	            <td>{{ log.stock.name }}</td>
+	            <td>
+		            {% if log.isBought  %}
+		                	<font class = "text-success" >BOUGHT</font>
+		            {% else %}
+		                	<font class = "text-danger">SOLD</font>
+		            {% endif %}
+		        </td>
+	            <td>{{ log.quantity }}</td>
+	            <td>{{ log.stock.code }}</td>
+	            <td><strong>$</strong>{{ log.price }}</td>
+	            <td>
+	            	{% if log.change >= 0 %}
+	          	      <font class="text-success">${{ log.change }}</font>
+	                {% elif log.change < 0 %}
+	                  <font class="text-danger">${{ log.change }}</font>
+	                {% endif %}
+	            </td>
+		</tr>
+		{% endfor %}
+    	</tbody>
+    </table>
+
+
+    
+
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript" src="{% static "js/portfolio.js" %}"></script>
+<script type="text/javascript" src="{% static "js/market.js" %}"></script>
+
+{% endblock %}

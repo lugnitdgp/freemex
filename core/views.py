@@ -9,7 +9,7 @@ from django.db import transaction
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 
-from .models import Player, Stock, PlayerStock
+from .models import Player, Stock, PlayerStock , Log
 from .forms import RegistrationForm
 
 
@@ -256,12 +256,14 @@ def buyStock(request):
                     playerStock = playerStockList[0]
                     playerStock.quantity = playerStock.quantity + \
                         requestedStockCount
+                    playerStock.invested += stockPrice * requestedStockCount
                     playerStock.save()
                 else:
                     playerStock = PlayerStock()
                     playerStock.player = playerObj
                     playerStock.stock = stockObj
                     playerStock.quantity = requestedStockCount
+                    playerStock.invested += stockPrice * requestedStockCount
                     playerStock.save()
 
                 # Deduct player cash
@@ -274,6 +276,17 @@ def buyStock(request):
                 for j in PlayerStock.objects.filter(player=playerObj):
                     playerObj.value_in_stocks += j.stock.price * j.quantity
                 playerObj.save()
+
+                # add transaction to log
+                log = Log()
+                log.player = playerObj
+                log.stock = stockObj
+                log.quantity = requestedStockCount
+                log.price = stockPrice
+                log.isBought = True
+                log.change = 0
+                log.save()
+                
                 response_data['code'] = 0
                 response_data['message'] = 'Transaction Successful'
             except:
@@ -319,15 +332,17 @@ def sellStock(request):
            requestedStockCount <= playerStockList[0].quantity):
             try:
 
+            	
+
                 # Update player to stock table
                 playerStock = playerStockList[0]
-                playerStock.quantity = playerStock.quantity - \
-                    requestedStockCount
+                initial_investment = playerStock.invested # stores cost price before selling
+                playerStock.quantity = playerStock.quantity - requestedStockCount
+                playerStock.invested = stockPrice * playerStock.quantity
                 playerStock.save()
 
                 # Add player money
-                newAvailableMoney = availableMoney + \
-                    (stockPrice * requestedStockCount)
+                newAvailableMoney = availableMoney + (stockPrice * requestedStockCount)
                 playerObj.cash = newAvailableMoney
 
                 # Change player value in stock
@@ -335,6 +350,18 @@ def sellStock(request):
                 for j in PlayerStock.objects.filter(player=playerObj):
                     playerObj.value_in_stocks += j.stock.price * j.quantity
                 playerObj.save()
+                
+                # add transaction to log
+                log = Log()
+                log.player = playerObj
+                log.stock = stockObj
+                log.quantity = requestedStockCount
+                log.price = stockPrice
+                log.isBought = False
+                log.change =   playerStock.invested  +            stockPrice * requestedStockCount  - initial_investment
+                # change   =   market value of remaining stocks + amount at which the stock is sold -cost of all stocks -
+                log.save()
+                
                 response_data['code'] = 0
                 response_data['message'] = 'Transaction Successful'
             except:
@@ -365,3 +392,20 @@ def engage(request):
     context = {}
 
     return render(request, 'core/engage.html', context)
+
+# handle the transactions page view
+
+def transactions(request):
+
+    context = {}
+    
+    playerObj = Player.objects.get(user=request.user)
+    logs = Log.objects.filter(player=playerObj)
+    logs = sorted(logs, key=lambda a: a.logtime, reverse=True)
+
+    context['player'] = playerObj
+    context['logs'] = logs
+
+
+    return render(request, 'core/transactions.html', context)
+

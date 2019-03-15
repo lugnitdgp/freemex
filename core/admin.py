@@ -8,3 +8,4 @@ from .models import *
 admin.site.register(Player)
 admin.site.register(Stock)
 admin.site.register(PlayerStock)
+admin.site.register(Log)

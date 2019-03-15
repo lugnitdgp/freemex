@@ -45,10 +45,27 @@ class PlayerStock(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+    invested = models.DecimalField(max_digits=19,
+                                decimal_places=2,default=0)
 
     def __str__(self):
         return str(str(self.player) + " - " + self.stock.code)
 
+class Log(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    isBought = models.BooleanField(default=True)
+    price = models.DecimalField(max_digits=19,
+                                decimal_places=2)
+    logtime = models.DateTimeField()
+    change = models.DecimalField(max_digits=19,
+                                decimal_places=2,default=0)
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        self.logtime = timezone.now()
+        return super(Log, self).save(*args, **kwargs)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
