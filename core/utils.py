@@ -1,4 +1,5 @@
 import requests
+from .secret import API_Access_Token
 
 from django.db import transaction
 from django.utils import timezone
@@ -11,11 +12,12 @@ def fetch_quotes(symbols):
 
     quotes = {}
     query_string = ','.join(symbols)
-    link = "https://api.iextrading.com/1.0/stock/market/batch?symbols={}&types=quote".format(query_string)  # noqa
+    headers = {"Accept": "application/json", "Authorization": "Bearer {}".format(API_Access_Token)}
+    link = "https://sandbox.tradier.com/v1/markets/quotes?symbols={}".format(query_string)  # noqa
     # print(link)
 
     try:
-        response = requests.get(link)
+        response = requests.get(link, headers=headers)
     except:
         return None
     if response.status_code != 200:
@@ -34,8 +36,8 @@ def update_all_stock_prices():
     symbol_list = [s.code for s in all_stocks]
     quotes = fetch_quotes(symbol_list)
     for stock in all_stocks:
-        stock.price = quotes[stock.code]['latestPrice']
-        stock.diff = quotes[stock.code]['change']
+        stock.price = quotes['quotes'][symbol_list.index(stock.code)]['last']
+        stock.diff = quotes['quotes'][symbol_list.index(stock.code)]['change']
         stock.last_updated = timezone.now()
         stock.save()
 
