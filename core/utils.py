@@ -1,4 +1,5 @@
 import requests
+from decouple import config
 
 from django.db import transaction
 from django.utils import timezone
@@ -11,7 +12,7 @@ def fetch_quotes(symbols):
 
     quotes = {}
     query_string = ','.join(symbols)
-    link = "https://api.iextrading.com/1.0/stock/market/batch?symbols={}&types=quote".format(query_string)  # noqa
+    link = "https://cloud.iexapis.com/stable/stock/market/batch?symbols={}&types=quote&token={}".format(query_string, config('API_SECRET_TOKEN'))  # noqa
     # print(link)
 
     try:
